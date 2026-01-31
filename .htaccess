@@ -1,0 +1,8 @@
+RewriteEngine On
+
+# Ne pas réécrire les fichiers et dossiers existants (assets, images, etc.)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Tout rediriger vers index.php avec le nom de page
+RewriteRule ^(.+)$ index.php?page=$1 [QSA,L]

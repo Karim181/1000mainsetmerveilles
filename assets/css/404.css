@@ -1,0 +1,35 @@
+/**
+ * Styles specifiques - Page 404
+ * 1000 Mains et Merveilles
+ */
+
+.page-404 {
+    padding: 120px 0;
+    text-align: center;
+    background: #faf8f5;
+}
+
+.page-404-content {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.error-emoji {
+    font-size: 80px;
+    display: block;
+    margin-bottom: 25px;
+}
+
+.page-404 h1 {
+    font-family: 'Fredoka', 'Quicksand', sans-serif;
+    font-size: 42px;
+    font-weight: 700;
+    color: #2b519f;
+    margin-bottom: 15px;
+}
+
+.page-404 p {
+    font-size: 18px;
+    color: #8b7e74;
+    margin-bottom: 35px;
+}

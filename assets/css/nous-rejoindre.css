@@ -1,0 +1,448 @@
+/**
+ * Styles specifiques - Page Nous Rejoindre
+ * 1000 Mains et Merveilles
+ */
+
+/* ========== SECTION BENEVOLE ========== */
+.rejoindre-benevole {
+    padding: 80px 0;
+    background: #faf8f5;
+}
+
+.benevole-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
+    margin-bottom: 50px;
+}
+
+.benevole-card {
+    background: white;
+    border-radius: 25px;
+    padding: 35px 25px;
+    text-align: center;
+    box-shadow: 0 8px 30px rgba(43, 81, 159, 0.08);
+    transition: all 0.3s ease;
+    border: 3px solid transparent;
+}
+
+.benevole-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(43, 81, 159, 0.12);
+    border-color: #20b4b7;
+}
+
+.benevole-icon {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+.benevole-card h3 {
+    font-family: 'Fredoka', 'Quicksand', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #2b519f;
+    margin-bottom: 12px;
+}
+
+.benevole-card p {
+    font-size: 15px;
+    color: #8b7e74;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Infos bénévole */
+.benevole-infos {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    background: white;
+    padding: 30px 50px;
+    border-radius: 25px;
+    box-shadow: 0 8px 30px rgba(43, 81, 159, 0.08);
+}
+
+.benevole-info-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.benevole-info-item span {
+    font-size: 28px;
+}
+
+.benevole-info-item p {
+    font-size: 15px;
+    color: #5a4a3a;
+    margin: 0;
+}
+
+.benevole-info-item strong {
+    color: #2b519f;
+}
+
+/* ========== SECTION FORMULAIRE CONTACT ========== */
+.rejoindre-contact {
+    padding: 80px 0;
+    background: linear-gradient(180deg, #faf8f5 0%, #e8f0ff 100%);
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 50px;
+    align-items: start;
+}
+
+.contact-form-wrapper {
+    background: white;
+    padding: 50px;
+    border-radius: 35px;
+    box-shadow: 0 10px 40px rgba(43, 81, 159, 0.3);
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-left h2,
+.text-left p {
+    text-align: left;
+}
+
+/* Formulaire */
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-family: 'Fredoka', 'Quicksand', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: #2b519f;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    padding: 14px 18px;
+    border: 2px solid #e8e4df;
+    border-radius: 15px;
+    background: #faf8f5;
+    color: #5a4a3a;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #20b4b7;
+    background: white;
+    box-shadow: 0 0 0 4px rgba(32, 180, 183, 0.1);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #b0a89e;
+}
+
+.form-group select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%232b519f' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 18px center;
+    padding-right: 45px;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+/* Case Newsletter mise en avant */
+.form-newsletter {
+    flex-direction: row;
+    align-items: center;
+    gap: 0;
+    background: linear-gradient(135deg, #e0f7f8 0%, #d4f1f2 100%);
+    border: 2px solid #20b4b7;
+    border-radius: 15px;
+    padding: 0;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.form-newsletter:hover {
+    box-shadow: 0 5px 20px rgba(32, 180, 183, 0.2);
+    transform: translateY(-2px);
+}
+
+.form-newsletter input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.form-newsletter label {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+    padding: 18px 20px;
+    cursor: pointer;
+    margin: 0;
+}
+
+.form-newsletter .newsletter-icon {
+    font-size: 32px;
+    flex-shrink: 0;
+}
+
+.form-newsletter .newsletter-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.form-newsletter .newsletter-text strong {
+    font-family: 'Fredoka', 'Quicksand', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: #2b519f;
+}
+
+.form-newsletter .newsletter-text small {
+    font-size: 13px;
+    color: #5a7a7b;
+}
+
+/* Checkbox visuel custom */
+.form-newsletter label::before {
+    content: '';
+    width: 24px;
+    height: 24px;
+    border: 2px solid #20b4b7;
+    border-radius: 6px;
+    background: white;
+    flex-shrink: 0;
+    margin-left: auto;
+    transition: all 0.2s ease;
+}
+
+.form-newsletter input[type="checkbox"]:checked + label::before {
+    background: #20b4b7;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.form-newsletter input[type="checkbox"]:checked + label {
+    background: rgba(32, 180, 183, 0.1);
+}
+
+/* Checkbox RGPD */
+.form-checkbox {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.form-checkbox input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    margin-top: 2px;
+    accent-color: #20b4b7;
+    cursor: pointer;
+}
+
+.form-checkbox label {
+    font-size: 14px;
+    font-weight: 400;
+    color: #8b7e74;
+    line-height: 1.5;
+}
+
+.form-checkbox label a {
+    color: #20b4b7;
+    text-decoration: underline;
+}
+
+.contact-form .btn-cta-final {
+    align-self: flex-start;
+    margin-top: 10px;
+}
+
+/* Infos contact */
+.contact-infos {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.contact-info-card {
+    background: white;
+    padding: 35px;
+    border-radius: 25px;
+    box-shadow: 0 8px 30px rgba(43, 81, 159, 0.08);
+}
+
+.contact-info-card h3 {
+    font-family: 'Fredoka', 'Quicksand', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #2b519f;
+    margin-bottom: 25px;
+}
+
+.contact-info-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.contact-info-item:last-child {
+    margin-bottom: 0;
+}
+
+.contact-info-item span {
+    font-size: 28px;
+    flex-shrink: 0;
+}
+
+.contact-info-item strong {
+    display: block;
+    font-family: 'Fredoka', 'Quicksand', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: #2b519f;
+    margin-bottom: 4px;
+}
+
+.contact-info-item p {
+    font-size: 15px;
+    color: #8b7e74;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* Réseaux sociaux */
+.contact-social {
+    background: linear-gradient(135deg, #20b4b7 0%, #17a2a5 100%);
+    padding: 30px;
+    border-radius: 25px;
+    text-align: center;
+}
+
+.contact-social h4 {
+    font-family: 'Fredoka', 'Quicksand', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 15px;
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    background: white;
+    border-radius: 50%;
+    font-size: 24px;
+    transition: all 0.3s ease;
+}
+
+.social-link:hover {
+    transform: scale(1.1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* ========== RESPONSIVE NOUS REJOINDRE ========== */
+@media (max-width: 992px) {
+    .benevole-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .contact-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .benevole-infos {
+        flex-direction: column;
+        gap: 20px;
+        padding: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .rejoindre-benevole,
+    .rejoindre-contact {
+        padding: 60px 0;
+    }
+
+    .benevole-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .benevole-card {
+        padding: 30px 25px;
+    }
+
+    .contact-form-wrapper {
+        padding: 30px 25px;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-form .btn-cta-final {
+        align-self: stretch;
+        text-align: center;
+    }
+
+    .form-newsletter label {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .form-newsletter label::before {
+        margin-left: 0;
+        order: -1;
+    }
+
+    .form-newsletter .newsletter-text strong {
+        font-size: 15px;
+    }
+}

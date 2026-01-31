@@ -1,0 +1,358 @@
+/**
+ * Styles specifiques - Page La Ressourcerie
+ * 1000 Mains et Merveilles
+ */
+
+/* ========== SECTION PEDAGOGIE ========== */
+.ress-pedagogie {
+    padding: 100px 0;
+    background: #faf8f5;
+}
+
+.ress-pedagogie-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 80px;
+    align-items: center;
+}
+
+.ress-pedagogie-text h2 {
+    font-family: 'Fredoka', 'Quicksand', sans-serif;
+    font-size: 38px;
+    font-weight: 700;
+    color: #2b519f;
+    margin-bottom: 25px;
+    line-height: 1.2;
+}
+
+.ress-pedagogie-text > p {
+    font-size: 17px;
+    line-height: 1.8;
+    color: #8b7e74;
+    margin-bottom: 20px;
+}
+
+/* Parcours objet (fleches) */
+.ress-parcours {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+}
+
+.parcours-step {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: white;
+    padding: 18px 22px;
+    border-radius: 25px;
+    box-shadow: 0 8px 25px rgba(43, 81, 159, 0.1);
+}
+
+.parcours-icon {
+    font-size: 28px;
+}
+
+.parcours-step strong {
+    display: block;
+    font-family: 'Fredoka', 'Quicksand', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: #2b519f;
+}
+
+.parcours-step p {
+    font-size: 13px;
+    color: #8b7e74;
+    margin: 0;
+}
+
+.parcours-arrow {
+    font-size: 24px;
+    color: #20b4b7;
+    font-weight: 700;
+}
+
+/* ========== BOUTIQUE PLAISIR ========== */
+.ress-boutique {
+    padding: 100px 0;
+     background: linear-gradient(180deg, #faf8f5 0%, #f5e6d3 40%, #f2c896 70%, #ea9842 90%);
+}
+
+.boutique-main-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+    margin-bottom: 60px;
+}
+
+.boutique-infos {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.boutique-info-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    background: white;
+    padding: 25px 30px;
+    border-radius: 25px;
+    box-shadow: 0 8px 25px rgba(43, 81, 159, 0.08);
+}
+
+.info-icon {
+    font-size: 32px;
+    flex-shrink: 0;
+}
+
+.info-content h3 {
+    font-family: 'Fredoka', 'Quicksand', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #2b519f;
+    margin-bottom: 8px;
+}
+
+.info-content p {
+    font-size: 15px;
+    color: #8b7e74;
+    line-height: 1.6;
+    margin-bottom: 4px;
+}
+
+.info-detail {
+    font-size: 13px !important;
+    font-style: italic;
+    opacity: 0.8;
+}
+
+/* ========== CATEGORIES ========== */
+.boutique-categories {
+    background: white;
+    padding: 45px;
+    border-radius: 35px;
+    box-shadow: 0 10px 35px rgba(43, 81, 159, 0.08);
+}
+
+.boutique-categories h3 {
+    font-family: 'Fredoka', 'Quicksand', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: #2b519f;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.categorie-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 20px 15px;
+    border-radius: 20px;
+    background: #faf8f5;
+    transition: all 0.3s ease;
+}
+
+.categorie-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(32, 180, 183, 0.15);
+}
+
+.categorie-icon {
+    font-size: 36px;
+}
+
+.categorie-item span:last-child {
+    font-family: 'Fredoka', 'Quicksand', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: #2b519f;
+}
+
+/* ========== SECTION CHAVENAY ========== */
+.ress-chavenay {
+    padding: 80px 0;
+    background: #faf8f5;
+}
+
+.chavenay-card {
+    position: relative;
+    background: linear-gradient(135deg, #e8f0ff 0%, #b0e5e8 100%);
+    border-radius: 40px;
+    padding: 60px;
+    overflow: hidden;
+}
+
+.chavenay-badge {
+    position: absolute;
+    top: 25px;
+    right: 30px;
+    background: linear-gradient(135deg, #f17f0a 0%, #ffc837 100%);
+    color: white;
+    font-family: 'Fredoka', 'Quicksand', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 8px 20px;
+    border-radius: 50px;
+}
+
+.chavenay-content {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 50px;
+    align-items: center;
+}
+
+.chavenay-text h2 {
+    font-family: 'Fredoka', 'Quicksand', sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: #2b519f;
+    margin-bottom: 15px;
+    line-height: 1.3;
+}
+
+.chavenay-text > p {
+    font-size: 16px;
+    line-height: 1.7;
+    color: #5a6b7a;
+    margin-bottom: 25px;
+}
+
+.chavenay-infos {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.chavenay-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.chavenay-info span {
+    font-size: 20px;
+}
+
+.chavenay-info p {
+    font-size: 15px;
+    color: #2b519f;
+    font-weight: 500;
+    margin: 0;
+}
+
+/* ========== ENCART SAINT-GERMAIN ========== */
+.ress-info-encart {
+    padding: 60px 0;
+    background: #faf8f5;
+}
+
+.info-encart-card {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    background: white;
+    border: 3px solid #f17f0a;
+    border-radius: 30px;
+    padding: 40px 50px;
+    box-shadow: 0 10px 40px rgba(241, 127, 10, 0.2);
+}
+
+.encart-icon {
+    font-size: 56px;
+    flex-shrink: 0;
+}
+
+.encart-text {
+    flex: 1;
+}
+
+.encart-text strong {
+    display: block;
+    font-family: 'Fredoka', 'Quicksand', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: #2b519f;
+    margin-bottom: 10px;
+}
+
+.encart-text p {
+    font-size: 18px;
+    color: #5a4a3a;
+    margin: 0;
+    line-height: 1.6;
+}
+
+.encart-link {
+    font-family: 'Fredoka', 'Quicksand', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: white;
+    background: linear-gradient(135deg, #f17f0a 0%, #ffc837 100%);
+    padding: 14px 28px;
+    border-radius: 50px;
+    white-space: nowrap;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(241, 127, 10, 0.3);
+}
+
+.encart-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(241, 127, 10, 0.4);
+    color: white;
+}
+
+/* ========== RESPONSIVE RESSOURCERIE ========== */
+@media (max-width: 768px) {
+    .ress-pedagogie-grid,
+    .boutique-main-grid,
+    .chavenay-content {
+        grid-template-columns: 1fr;
+    }
+
+    .ress-parcours {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .parcours-arrow {
+        transform: rotate(90deg);
+        align-self: center;
+    }
+
+    .categories-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .chavenay-card {
+        padding: 35px 25px;
+    }
+
+    .chavenay-badge {
+        position: static;
+        display: inline-block;
+        margin-bottom: 20px;
+    }
+
+    .info-encart-card {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .encart-link {
+        margin-top: 10px;
+    }
+}

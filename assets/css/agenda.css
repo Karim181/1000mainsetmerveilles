@@ -1,0 +1,277 @@
+/**
+ * Styles specifiques - Page Agenda
+ * 1000 Mains et Merveilles
+ */
+
+/* ========== GRILLE AGENDA 2x2 ========== */
+.agenda-grid-wrapper {
+    padding: 80px 0;
+    background: #faf8f5;
+}
+
+.agenda-grid-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.agenda-grid-cell {
+    background: white;
+    border-radius: 30px;
+    padding: 35px;
+    box-shadow: 0 8px 30px rgba(43, 81, 159, 0.08);
+    display: flex;
+    flex-direction: column;
+}
+
+.grid-cell-header {
+    margin-bottom: 25px;
+}
+
+.grid-cell-header h2 {
+    font-family: 'Fredoka', 'Quicksand', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: #2b519f;
+    margin-top: 12px;
+    line-height: 1.2;
+}
+
+/* ========== SECTION 1 : ATELIERS CREATIFS ========== */
+.agenda-ateliers {
+    border-top: 4px solid #20b4b7;
+}
+
+.ateliers-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    flex: 1;
+}
+
+.atelier-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    padding: 15px;
+    background: #faf8f5;
+    border-radius: 15px;
+    transition: all 0.3s ease;
+}
+
+.atelier-item:hover {
+    background: #e0f7f8;
+    transform: translateX(5px);
+}
+
+.atelier-icon {
+    font-size: 32px;
+    flex-shrink: 0;
+}
+
+.atelier-item h3 {
+    font-family: 'Fredoka', 'Quicksand', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: #2b519f;
+    margin-bottom: 4px;
+}
+
+.atelier-item p {
+    font-size: 16px;
+    color: #8b7e74;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* ========== SECTION 2 : PROGRAMME DU MOIS ========== */
+.agenda-programme {
+    border-top: 4px solid #f17f0a;
+}
+
+.programme-liste {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex: 1;
+}
+
+.evenement-mini {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 12px 15px;
+    background: #faf8f5;
+    border-radius: 15px;
+    transition: all 0.3s ease;
+}
+
+.evenement-mini:hover {
+    background: #fff3e0;
+    transform: translateX(5px);
+}
+
+.evenement-date-mini {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 55px;
+    height: 55px;
+    background: linear-gradient(135deg, #f17f0a 0%, #ffc837 100%);
+    border-radius: 12px;
+    color: white;
+    flex-shrink: 0;
+}
+
+.evenement-date-mini .jour {
+    font-family: 'Fredoka', 'Quicksand', sans-serif;
+    font-size: 23px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.evenement-date-mini .mois {
+    font-family: 'Fredoka', 'Quicksand', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.evenement-info-mini h3 {
+    font-family: 'Fredoka', 'Quicksand', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: #2b519f;
+    margin-bottom: 4px;
+}
+
+.evenement-info-mini span {
+    font-size: 15px;
+    color: #8b7e74;
+}
+
+.programme-note {
+    font-size: 14px;
+    color: #8b7e74;
+    font-style: italic;
+    margin-top: 15px;
+    text-align: center;
+}
+
+/* ========== SECTION 3 : AUTRES EVENEMENTS ========== */
+.agenda-evenements {
+    border-top: 4px solid #20b4b7;
+}
+
+.evenements-speciaux-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    flex: 1;
+}
+
+.evenement-special-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    padding: 15px;
+    background: #faf8f5;
+    border-radius: 15px;
+    border: 2px dashed #e0e0e0;
+    transition: all 0.3s ease;
+}
+
+.evenement-special-item:hover {
+    border-color: #20b4b7;
+    border-style: solid;
+    transform: translateX(5px);
+}
+
+.evenement-special-icon {
+    font-size: 32px;
+    flex-shrink: 0;
+}
+
+.evenement-special-item h3 {
+    font-family: 'Fredoka', 'Quicksand', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: #2b519f;
+    margin-bottom: 4px;
+}
+
+.evenement-special-item p {
+    font-size: 16px;
+    color: #8b7e74;
+    line-height: 1.5;
+    margin: 0 0 8px 0;
+}
+
+.evenement-special-date {
+    display: inline-block;
+    background: #fff3e0;
+    color: #f17f0a;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 15px;
+}
+
+/* ========== SECTION 4 : PROPOSER UN ATELIER ========== */
+.agenda-proposer {
+    border-top: 4px solid #f17f0a;
+}
+
+.agenda-proposer .proposer-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.agenda-proposer .proposer-content p {
+    font-size: 17px;
+    color: #8b7e74;
+    line-height: 1.7;
+    margin-bottom: 25px;
+}
+
+.agenda-proposer .btn-cta-final {
+    align-self: flex-start;
+}
+
+/* ========== RESPONSIVE AGENDA ========== */
+@media (max-width: 992px) {
+    .agenda-grid-layout {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+}
+
+@media (max-width: 768px) {
+    .agenda-grid-wrapper {
+        padding: 60px 0;
+    }
+
+    .agenda-grid-cell {
+        padding: 25px;
+    }
+
+    .grid-cell-header h2 {
+        font-size: 23px;
+    }
+
+    .atelier-item,
+    .evenement-mini,
+    .evenement-special-item {
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+    }
+
+    .evenement-date-mini {
+        min-width: 60px;
+        height: 60px;
+    }
+}
