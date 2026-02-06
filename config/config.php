@@ -26,20 +26,31 @@ define('ENABLE_TRAFFIC_LOG', true);
 define('LOG_PATH', ROOT_PATH . '/logs');
 
 // =====================================
-// Phase 2 : À activer lors du backend
-// =====================================
-/*
 // Configuration BDD
+// =====================================
 define('DB_HOST', 'localhost');
 define('DB_NAME', '1000mains');
 define('DB_USER', 'root');
 define('DB_PASS', '');
 define('DB_CHARSET', 'utf8mb4');
 
+// =====================================
 // Configuration emails
+// =====================================
 define('CONTACT_EMAIL', 'contact@1000mainsetmerveilles.fr');
 define('ADMIN_EMAIL', 'admin@1000mainsetmerveilles.fr');
 
+// =====================================
 // Sécurité
+// =====================================
 define('CSRF_TOKEN_NAME', 'csrf_token');
-*/
+
+// URL secrète pour accéder à l'admin (sans slashes)
+// Changez cette valeur pour sécuriser l'accès
+define('ADMIN_SLUG', 'gestion');
+
+// =====================================
+// Uploads
+// =====================================
+define('UPLOAD_PATH', ROOT_PATH . '/uploads');
+define('UPLOAD_MAX_SIZE', 2 * 1024 * 1024); // 2 Mo

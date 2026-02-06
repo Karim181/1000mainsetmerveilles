@@ -25,6 +25,7 @@
                 <li><a href="<?= url('venir-chiner') ?>" class="<?= is_page('venir-chiner') ? 'nav-active' : '' ?>">Venir chiner</a></li>
                 <li><a href="<?= url('dons') ?>" class="nav-highlight <?= is_page('dons') ? 'nav-active' : '' ?>">Faire un don</a></li>
                 <li><a href="<?= url('agenda') ?>" class="<?= is_page('agenda') ? 'nav-active' : '' ?>">Agenda</a></li>
+                <li><a href="<?= url('actualites') ?>" class="<?= is_page('actualites') || is_page('actualite') ? 'nav-active' : '' ?>">Actualités</a></li>
                 <li><a href="<?= url('nous-rejoindre') ?>" class="btn-nav-final <?= is_page('nous-rejoindre') ? 'nav-active' : '' ?>">Nous rejoindre</a></li>
             </ul>
         </div>

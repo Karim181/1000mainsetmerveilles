@@ -1,0 +1,13 @@
+# Bloquer l'accès direct aux fichiers admin
+# L'accès se fait uniquement via l'URL sécurisée (ex: /gestion/)
+
+<FilesMatch "\.php$">
+    Order Deny,Allow
+    Deny from all
+</FilesMatch>
+
+# Bloquer aussi l'accès au dossier includes
+<FilesMatch "^includes">
+    Order Deny,Allow
+    Deny from all
+</FilesMatch>

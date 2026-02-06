@@ -1,10 +1,58 @@
+<?php
+/**
+ * Page Venir Chiner - Affichage public des produits
+ * 1000 Mains et Merveilles
+ */
+
+// Récupérer les pépites (produits mis en avant et disponibles)
+$pepites = dbFetchAll(
+    'SELECT p.*, c.name as category_name, c.icon as category_icon
+     FROM products p
+     LEFT JOIN categories c ON p.category_id = c.id
+     WHERE p.is_featured = 1 AND p.status = "available"
+     ORDER BY p.created_at DESC
+     LIMIT 4'
+);
+
+// Récupérer les arrivages récents (produits disponibles non featured, des 7 derniers jours)
+$arrivages = dbFetchAll(
+    'SELECT p.*, c.name as category_name, c.icon as category_icon
+     FROM products p
+     LEFT JOIN categories c ON p.category_id = c.id
+     WHERE p.status = "available" AND p.is_featured = 0
+     ORDER BY p.created_at DESC
+     LIMIT 6'
+);
+
+// Récupérer les catégories avec le nombre de produits
+$categories = dbFetchAll(
+    'SELECT c.*, COUNT(p.id) as products_count, MIN(p.price) as min_price
+     FROM categories c
+     LEFT JOIN products p ON c.id = p.category_id AND p.status = "available"
+     GROUP BY c.id
+     ORDER BY c.sort_order'
+);
+
+// Récupérer les produits vendus récemment
+$vendus = dbFetchAll(
+    'SELECT p.*, c.name as category_name, c.icon as category_icon
+     FROM products p
+     LEFT JOIN categories c ON p.category_id = c.id
+     WHERE p.status = "sold"
+     ORDER BY p.sold_at DESC
+     LIMIT 6'
+);
+
+// Mois en français
+$moisFr = ['', 'janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Venir chiner - Pepites et objets de seconde main | 1000 Mains et Merveilles</title>
-    <meta name="description" content="Decouvrez nos pepites du moment et les arrivages recents dans notre ressourcerie a Plaisir (78). Meubles, vetements, deco, livres... a prix solidaires.">
+    <title>Venir chiner - Pépites et objets de seconde main | 1000 Mains et Merveilles</title>
+    <meta name="description" content="Découvrez nos pépites du moment et les arrivages récents dans notre ressourcerie à Plaisir (78). Meubles, vêtements, déco, livres... à prix solidaires.">
 
     <!-- Favicons -->
     <link rel="icon" type="image/x-icon" href="<?= asset('images/favicon.ico') ?>">
@@ -32,7 +80,7 @@
                 <div class="page-hero-text">
                     <span class="hero-label-final">🛍️ Nos trouvailles</span>
                     <h1>Venir <span class="highlight-turquoise">chiner</span></h1>
-                    <p class="hero-description-final">Des objets uniques, des prix solidaires. Decouvrez nos pepites du moment et les derniers arrivages dans notre ressourcerie.</p>
+                    <p class="hero-description-final">Des objets uniques, des prix solidaires. Découvrez nos pépites du moment et les derniers arrivages dans notre ressourcerie.</p>
                 </div>
                 <div class="page-hero-photo">
                     <div class="photo-placeholder-final hero-page-size">
@@ -54,70 +102,37 @@
         <div class="container">
             <div class="section-header-final">
                 <span class="section-tag-final tag-orange">Coups de coeur 💎</span>
-                <h2>Les pepites <span class="highlight-turquoise">en rayon</span></h2>
-                <p>Nos trouvailles preferees du moment, disponibles en boutique</p>
+                <h2>Les pépites <span class="highlight-turquoise">en rayon</span></h2>
+                <p>Nos trouvailles préférées du moment, disponibles en boutique</p>
             </div>
 
             <div class="pepites-grid">
-                <article class="pepite-card">
-                    <div class="pepite-photo">
-                        <div class="photo-placeholder-final pepite-photo-size">
-                            <div class="photo-icon-final">📸</div>
+                <?php if (empty($pepites)): ?>
+                    <p class="empty-message">Aucune pépite en ce moment. Revenez bientôt !</p>
+                <?php else: ?>
+                    <?php foreach ($pepites as $product): ?>
+                    <article class="pepite-card">
+                        <div class="pepite-photo">
+                            <?php if ($product['image']): ?>
+                                <img src="<?= upload_url('products/' . $product['image']) ?>" alt="<?= e($product['name']) ?>" class="pepite-img">
+                            <?php else: ?>
+                                <div class="photo-placeholder-final pepite-photo-size">
+                                    <div class="photo-icon-final">📸</div>
+                                </div>
+                            <?php endif; ?>
+                            <span class="pepite-badge badge-disponible">En rayon</span>
                         </div>
-                        <span class="pepite-badge badge-disponible">En rayon</span>
-                    </div>
-                    <div class="pepite-info">
-                        <span class="pepite-categorie">🪑 Meubles</span>
-                        <h3>Commode vintage annees 60</h3>
-                        <p>Tres bon etat, bois massif, 3 tiroirs. Ideal pour une chambre ou un salon.</p>
-                        <span class="pepite-prix">45 &euro;</span>
-                    </div>
-                </article>
-
-                <article class="pepite-card">
-                    <div class="pepite-photo">
-                        <div class="photo-placeholder-final pepite-photo-size">
-                            <div class="photo-icon-final">📸</div>
+                        <div class="pepite-info">
+                            <span class="pepite-categorie"><?= $product['category_icon'] ?> <?= e($product['category_name']) ?></span>
+                            <h3><?= e($product['name']) ?></h3>
+                            <?php if ($product['description']): ?>
+                                <p><?= e(substr($product['description'], 0, 100)) ?><?= strlen($product['description']) > 100 ? '...' : '' ?></p>
+                            <?php endif; ?>
+                            <span class="pepite-prix"><?= number_format($product['price'], 0, ',', ' ') ?> €</span>
                         </div>
-                        <span class="pepite-badge badge-disponible">En rayon</span>
-                    </div>
-                    <div class="pepite-info">
-                        <span class="pepite-categorie">🖼️ Decoration</span>
-                        <h3>Miroir Art Deco dore</h3>
-                        <p>Cadre en bois sculpte, miroir biseaute. Une piece unique pour votre interieur.</p>
-                        <span class="pepite-prix">25 &euro;</span>
-                    </div>
-                </article>
-
-                <article class="pepite-card">
-                    <div class="pepite-photo">
-                        <div class="photo-placeholder-final pepite-photo-size">
-                            <div class="photo-icon-final">📸</div>
-                        </div>
-                        <span class="pepite-badge badge-disponible">En rayon</span>
-                    </div>
-                    <div class="pepite-info">
-                        <span class="pepite-categorie">💡 Luminaires</span>
-                        <h3>Lampe industrielle metal</h3>
-                        <p>Style atelier, metal brosse, abat-jour orientable. Parfait pour un bureau.</p>
-                        <span class="pepite-prix">18 &euro;</span>
-                    </div>
-                </article>
-
-                <article class="pepite-card">
-                    <div class="pepite-photo">
-                        <div class="photo-placeholder-final pepite-photo-size">
-                            <div class="photo-icon-final">📸</div>
-                        </div>
-                        <span class="pepite-badge badge-disponible">En rayon</span>
-                    </div>
-                    <div class="pepite-info">
-                        <span class="pepite-categorie">🍽️ Vaisselle</span>
-                        <h3>Service a the porcelaine</h3>
-                        <p>6 tasses et soucoupes, motif floral, fabrication francaise. Complet et intact.</p>
-                        <span class="pepite-prix">15 &euro;</span>
-                    </div>
-                </article>
+                    </article>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </div>
         </div>
     </section>
@@ -126,89 +141,41 @@
     <section class="chiner-arrivages">
         <div class="container">
             <div class="section-header-final">
-                <span class="section-tag-final tag-turquoise">Fraichement arrives 📦</span>
-                <h2>Les arrivages <span class="highlight-turquoise">recents</span></h2>
-                <p>Les derniers objets arrives en boutique cette semaine</p>
+                <span class="section-tag-final tag-turquoise">Fraîchement arrivés 📦</span>
+                <h2>Les arrivages <span class="highlight-turquoise">récents</span></h2>
+                <p>Les derniers objets arrivés en boutique</p>
             </div>
 
             <div class="arrivages-grid">
-                <article class="arrivage-card">
-                    <div class="arrivage-photo">
-                        <div class="photo-placeholder-final arrivage-photo-size">
-                            <div class="photo-icon-final">📸</div>
+                <?php if (empty($arrivages)): ?>
+                    <p class="empty-message">Pas de nouveaux arrivages pour le moment.</p>
+                <?php else: ?>
+                    <?php foreach ($arrivages as $product): ?>
+                    <article class="arrivage-card">
+                        <div class="arrivage-photo">
+                            <?php if ($product['image']): ?>
+                                <img src="<?= upload_url('products/' . $product['image']) ?>" alt="<?= e($product['name']) ?>" class="arrivage-img">
+                            <?php else: ?>
+                                <div class="photo-placeholder-final arrivage-photo-size">
+                                    <div class="photo-icon-final">📸</div>
+                                </div>
+                            <?php endif; ?>
                         </div>
-                    </div>
-                    <div class="arrivage-info">
-                        <span class="arrivage-date">📅 Lundi 27 janvier</span>
-                        <h3>Lot de livres jeunesse</h3>
-                        <p>Une vingtaine de livres pour enfants en excellent etat.</p>
-                    </div>
-                </article>
-
-                <article class="arrivage-card">
-                    <div class="arrivage-photo">
-                        <div class="photo-placeholder-final arrivage-photo-size">
-                            <div class="photo-icon-final">📸</div>
+                        <div class="arrivage-info">
+                            <?php
+                            $dateCreation = strtotime($product['created_at']);
+                            $jour = date('d', $dateCreation);
+                            $mois = $moisFr[(int)date('n', $dateCreation)];
+                            ?>
+                            <span class="arrivage-date">📅 <?= $jour ?> <?= $mois ?></span>
+                            <h3><?= e($product['name']) ?></h3>
+                            <?php if ($product['description']): ?>
+                                <p><?= e(substr($product['description'], 0, 80)) ?><?= strlen($product['description']) > 80 ? '...' : '' ?></p>
+                            <?php endif; ?>
                         </div>
-                    </div>
-                    <div class="arrivage-info">
-                        <span class="arrivage-date">📅 Lundi 27 janvier</span>
-                        <h3>Table basse en chene</h3>
-                        <p>Style campagne, plateau en bois massif, pieds tournes.</p>
-                    </div>
-                </article>
-
-                <article class="arrivage-card">
-                    <div class="arrivage-photo">
-                        <div class="photo-placeholder-final arrivage-photo-size">
-                            <div class="photo-icon-final">📸</div>
-                        </div>
-                    </div>
-                    <div class="arrivage-info">
-                        <span class="arrivage-date">📅 Samedi 25 janvier</span>
-                        <h3>Vetements hiver femme</h3>
-                        <p>Manteaux, pulls et echarpes de marque, toutes tailles.</p>
-                    </div>
-                </article>
-
-                <article class="arrivage-card">
-                    <div class="arrivage-photo">
-                        <div class="photo-placeholder-final arrivage-photo-size">
-                            <div class="photo-icon-final">📸</div>
-                        </div>
-                    </div>
-                    <div class="arrivage-info">
-                        <span class="arrivage-date">📅 Samedi 25 janvier</span>
-                        <h3>Jeux de societe</h3>
-                        <p>Monopoly, Scrabble, Cluedo... tous complets et en bon etat.</p>
-                    </div>
-                </article>
-
-                <article class="arrivage-card">
-                    <div class="arrivage-photo">
-                        <div class="photo-placeholder-final arrivage-photo-size">
-                            <div class="photo-icon-final">📸</div>
-                        </div>
-                    </div>
-                    <div class="arrivage-info">
-                        <span class="arrivage-date">📅 Jeudi 23 janvier</span>
-                        <h3>Vaisselle retro</h3>
-                        <p>Assiettes, bols et plats des annees 70, motifs colores.</p>
-                    </div>
-                </article>
-
-                <article class="arrivage-card">
-                    <div class="arrivage-photo">
-                        <div class="photo-placeholder-final arrivage-photo-size">
-                            <div class="photo-icon-final">📸</div>
-                        </div>
-                    </div>
-                    <div class="arrivage-info">
-                        <span class="arrivage-date">📅 Jeudi 23 janvier</span>
-                        <h3>Cadres et tableaux</h3>
-                        <p>Reproductions et cadres anciens, differentes tailles.</p>
-                    </div>
-                </article>
+                    </article>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </div>
         </div>
     </section>
@@ -218,168 +185,66 @@
         <div class="container">
             <div class="section-header-final">
                 <span class="section-tag-final tag-orange">Nos rayons 🏷️</span>
-                <h2>Explorez nos <span class="highlight-turquoise">categories</span></h2>
-                <p>Tout un univers d'objets a decouvrir a prix solidaires</p>
+                <h2>Explorez nos <span class="highlight-turquoise">catégories</span></h2>
+                <p>Tout un univers d'objets à découvrir à prix solidaires</p>
             </div>
 
             <div class="categories-showcase">
+                <?php foreach ($categories as $cat): ?>
                 <article class="categorie-showcase-card">
-                    <div class="categorie-showcase-icon">🪑</div>
-                    <h3>Meubles</h3>
-                    <p>Tables, chaises, commodes, armoires, etageres... Du vintage au contemporain.</p>
-                    <span class="categorie-fourchette">A partir de 5 &euro;</span>
+                    <div class="categorie-showcase-icon"><?= $cat['icon'] ?: '📦' ?></div>
+                    <h3><?= e($cat['name']) ?></h3>
+                    <p><?= $cat['products_count'] ?> article<?= $cat['products_count'] > 1 ? 's' : '' ?> disponible<?= $cat['products_count'] > 1 ? 's' : '' ?></p>
+                    <?php if ($cat['min_price']): ?>
+                        <span class="categorie-fourchette">À partir de <?= number_format($cat['min_price'], 0, ',', ' ') ?> €</span>
+                    <?php endif; ?>
                 </article>
-
-                <article class="categorie-showcase-card">
-                    <div class="categorie-showcase-icon">👗</div>
-                    <h3>Vetements</h3>
-                    <p>Homme, femme, enfant. Toutes saisons, toutes tailles, grandes marques.</p>
-                    <span class="categorie-fourchette">A partir de 1 &euro;</span>
-                </article>
-
-                <article class="categorie-showcase-card">
-                    <div class="categorie-showcase-icon">📚</div>
-                    <h3>Livres</h3>
-                    <p>Romans, BD, mangas, livres jeunesse, beaux livres, guides pratiques.</p>
-                    <span class="categorie-fourchette">A partir de 0,50 &euro;</span>
-                </article>
-
-                <article class="categorie-showcase-card">
-                    <div class="categorie-showcase-icon">🍽️</div>
-                    <h3>Vaisselle</h3>
-                    <p>Services complets, pieces uniques, verres, couverts, ustensiles de cuisine.</p>
-                    <span class="categorie-fourchette">A partir de 1 &euro;</span>
-                </article>
-
-                <article class="categorie-showcase-card">
-                    <div class="categorie-showcase-icon">🧸</div>
-                    <h3>Jouets</h3>
-                    <p>Peluches, jeux de societe, puzzles, figurines, jeux educatifs.</p>
-                    <span class="categorie-fourchette">A partir de 1 &euro;</span>
-                </article>
-
-                <article class="categorie-showcase-card">
-                    <div class="categorie-showcase-icon">🖼️</div>
-                    <h3>Decoration</h3>
-                    <p>Cadres, miroirs, vases, bibelots, objets d'art, linge de maison.</p>
-                    <span class="categorie-fourchette">A partir de 2 &euro;</span>
-                </article>
-
-                <article class="categorie-showcase-card">
-                    <div class="categorie-showcase-icon">💡</div>
-                    <h3>Luminaires</h3>
-                    <p>Lampes de bureau, lampadaires, appliques, abat-jour, suspensions.</p>
-                    <span class="categorie-fourchette">A partir de 5 &euro;</span>
-                </article>
-
-                <article class="categorie-showcase-card">
-                    <div class="categorie-showcase-icon">🎵</div>
-                    <h3>Loisirs</h3>
-                    <p>CD, vinyles, instruments, sport, jardinage, bricolage et plus encore.</p>
-                    <span class="categorie-fourchette">A partir de 1 &euro;</span>
-                </article>
+                <?php endforeach; ?>
             </div>
         </div>
     </section>
 
     <!-- ========== PEPITES VENDUES ========== -->
+    <?php if (!empty($vendus)): ?>
     <section class="chiner-vendues">
         <div class="container">
             <div class="section-header-final">
-                <span class="section-tag-final tag-turquoise">Deja parties ! 🎉</span>
-                <h2>Les pepites <span class="highlight-turquoise">vendues</span></h2>
-                <p>Elles ont trouve preneur... Ne ratez pas les prochaines !</p>
+                <span class="section-tag-final tag-turquoise">Déjà parties ! 🎉</span>
+                <h2>Les pépites <span class="highlight-turquoise">vendues</span></h2>
+                <p>Elles ont trouvé preneur... Ne ratez pas les prochaines !</p>
             </div>
 
             <div class="vendues-grid">
+                <?php foreach ($vendus as $product): ?>
                 <article class="vendue-card">
                     <div class="vendue-photo">
-                        <div class="photo-placeholder-final vendue-photo-size">
-                            <div class="photo-icon-final">📸</div>
-                        </div>
+                        <?php if ($product['image']): ?>
+                            <img src="<?= upload_url('products/' . $product['image']) ?>" alt="<?= e($product['name']) ?>" class="vendue-img">
+                        <?php else: ?>
+                            <div class="photo-placeholder-final vendue-photo-size">
+                                <div class="photo-icon-final">📸</div>
+                            </div>
+                        <?php endif; ?>
                         <span class="pepite-badge badge-vendu">Vendu</span>
                     </div>
                     <div class="vendue-info">
-                        <h3>Fauteuil club cuir</h3>
-                        <span class="vendue-prix">35 &euro;</span>
+                        <h3><?= e($product['name']) ?></h3>
+                        <span class="vendue-prix"><?= number_format($product['price'], 0, ',', ' ') ?> €</span>
                     </div>
                 </article>
-
-                <article class="vendue-card">
-                    <div class="vendue-photo">
-                        <div class="photo-placeholder-final vendue-photo-size">
-                            <div class="photo-icon-final">📸</div>
-                        </div>
-                        <span class="pepite-badge badge-vendu">Vendu</span>
-                    </div>
-                    <div class="vendue-info">
-                        <h3>Machine a coudre Singer</h3>
-                        <span class="vendue-prix">40 &euro;</span>
-                    </div>
-                </article>
-
-                <article class="vendue-card">
-                    <div class="vendue-photo">
-                        <div class="photo-placeholder-final vendue-photo-size">
-                            <div class="photo-icon-final">📸</div>
-                        </div>
-                        <span class="pepite-badge badge-vendu">Vendu</span>
-                    </div>
-                    <div class="vendue-info">
-                        <h3>Velo enfant 20 pouces</h3>
-                        <span class="vendue-prix">20 &euro;</span>
-                    </div>
-                </article>
-
-                <article class="vendue-card">
-                    <div class="vendue-photo">
-                        <div class="photo-placeholder-final vendue-photo-size">
-                            <div class="photo-icon-final">📸</div>
-                        </div>
-                        <span class="pepite-badge badge-vendu">Vendu</span>
-                    </div>
-                    <div class="vendue-info">
-                        <h3>Collection Tintin (12 tomes)</h3>
-                        <span class="vendue-prix">18 &euro;</span>
-                    </div>
-                </article>
-
-                <article class="vendue-card">
-                    <div class="vendue-photo">
-                        <div class="photo-placeholder-final vendue-photo-size">
-                            <div class="photo-icon-final">📸</div>
-                        </div>
-                        <span class="pepite-badge badge-vendu">Vendu</span>
-                    </div>
-                    <div class="vendue-info">
-                        <h3>Buffet annees 50</h3>
-                        <span class="vendue-prix">60 &euro;</span>
-                    </div>
-                </article>
-
-                <article class="vendue-card">
-                    <div class="vendue-photo">
-                        <div class="photo-placeholder-final vendue-photo-size">
-                            <div class="photo-icon-final">📸</div>
-                        </div>
-                        <span class="pepite-badge badge-vendu">Vendu</span>
-                    </div>
-                    <div class="vendue-info">
-                        <h3>Service Limoges 24 pieces</h3>
-                        <span class="vendue-prix">30 &euro;</span>
-                    </div>
-                </article>
+                <?php endforeach; ?>
             </div>
         </div>
     </section>
+    <?php endif; ?>
 
     <!-- ========== OU VENIR CHINER ========== -->
     <section class="chiner-lieu">
         <div class="container">
             <div class="section-header-final">
                 <span class="section-tag-final tag-orange">Nous trouver 📍</span>
-                <h2>Ou venir <span class="highlight-turquoise">chiner</span> ?</h2>
-                <p>Notre boutique vous accueille a Plaisir</p>
+                <h2>Où venir <span class="highlight-turquoise">chiner</span> ?</h2>
+                <p>Notre boutique vous accueille à Plaisir</p>
             </div>
 
             <div class="lieu-grid">
@@ -388,8 +253,8 @@
                         <div class="info-icon">📍</div>
                         <div class="info-content">
                             <h3>Adresse</h3>
-                            <p>Zone d'activite, Plaisir (78370)</p>
-                            <p class="info-detail">Acces facile, parking gratuit</p>
+                            <p>Zone d'activité, Plaisir (78370)</p>
+                            <p class="info-detail">Accès facile, parking gratuit</p>
                         </div>
                     </div>
 
@@ -398,7 +263,7 @@
                         <div class="info-content">
                             <h3>Horaires boutique</h3>
                             <p><strong>Mardi au samedi :</strong> 10h - 18h</p>
-                            <p class="info-detail">Ferme les dimanches et lundis</p>
+                            <p class="info-detail">Fermé les dimanches et lundis</p>
                         </div>
                     </div>
 
@@ -406,7 +271,7 @@
                         <div class="info-icon">💳</div>
                         <div class="info-content">
                             <h3>Paiement</h3>
-                            <p>Especes et carte bancaire acceptees</p>
+                            <p>Espèces et carte bancaire acceptées</p>
                         </div>
                     </div>
 
@@ -414,7 +279,7 @@
                         <div class="info-icon">♻️</div>
                         <div class="info-content">
                             <h3>Notre engagement</h3>
-                            <p>100% des benefices financent nos actions solidaires et environnementales</p>
+                            <p>100% des bénéfices financent nos actions solidaires et environnementales</p>
                         </div>
                     </div>
                 </div>
@@ -422,7 +287,7 @@
                 <div class="lieu-map">
                     <div class="photo-placeholder-final lieu-map-size">
                         <div class="photo-icon-final">🗺️</div>
-                        <p>Carte / Plan d'acces<br>Google Maps</p>
+                        <p>Carte / Plan d'accès<br>Google Maps</p>
                     </div>
                 </div>
             </div>
@@ -435,8 +300,8 @@
             <div class="cta-final-box">
                 <div class="cta-final-content">
                     <span class="cta-emoji-final">💎</span>
-                    <h2>Ne ratez aucune pepite !</h2>
-                    <p>Suivez-nous sur les reseaux sociaux pour decouvrir nos arrivages en temps reel, ou inscrivez-vous a notre newsletter.</p>
+                    <h2>Ne ratez aucune pépite !</h2>
+                    <p>Suivez-nous sur les réseaux sociaux pour découvrir nos arrivages en temps réel, ou inscrivez-vous à notre newsletter.</p>
                     <div class="cta-buttons">
                         <a href="<?= url('nous-rejoindre') ?>" class="btn-cta-final">Suivez-nous 📱</a>
                         <a href="<?= url('dons') ?>" class="btn-cta-secondary">📦 Faire un don</a>
@@ -458,7 +323,7 @@
             <div class="footer-final-grid">
                 <div class="footer-main-final">
                     <img src="<?= asset('images/1000-mains-et-merveilles-2.png') ?>" alt="Logo" class="footer-logo-final">
-                    <p class="footer-tagline-final">Ensemble, donnons une seconde vie aux objets et creons du lien 💙</p>
+                    <p class="footer-tagline-final">Ensemble, donnons une seconde vie aux objets et créons du lien 💙</p>
                 </div>
                 <div class="footer-links-final">
                     <h4>Navigation</h4>
@@ -478,7 +343,7 @@
                 </div>
                 <div class="footer-newsletter-final">
                     <h4>Newsletter 📬</h4>
-                    <p>Restez informes de nos actualites</p>
+                    <p>Restez informés de nos actualités</p>
                     <form class="newsletter-final" action="#" method="post">
                         <input type="email" placeholder="Votre email" required>
                         <button type="submit">→</button>
@@ -488,8 +353,8 @@
             <div class="footer-bottom-final">
                 <p>&copy; 2026 1000 Mains et Merveilles &bull; Association loi 1901 💙</p>
                 <div class="footer-legal-final">
-                    <a href="<?= url('mentions-legales') ?>">Mentions legales</a>
-                    <a href="<?= url('confidentialite') ?>">Confidentialite</a>
+                    <a href="<?= url('mentions-legales') ?>">Mentions légales</a>
+                    <a href="<?= url('confidentialite') ?>">Confidentialité</a>
                 </div>
             </div>
         </div>

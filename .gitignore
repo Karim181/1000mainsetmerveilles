@@ -1,0 +1,12 @@
+# Logs
+logs/
+
+# Uploads utilisateurs
+uploads/
+
+# Scripts sensibles
+database/create_test_users.php
+database/reset_password.php
+
+# Claude Code
+.claude/
