@@ -4,13 +4,13 @@
  * 1000 Mains et Merveilles
  */
 
-// Récupérer les pépites (produits mis en avant et disponibles)
+// Récupérer les pépites (rotation hebdomadaire automatique parmi les produits disponibles)
 $pepites = dbFetchAll(
     'SELECT p.*, c.name as category_name, c.icon as category_icon
      FROM products p
      LEFT JOIN categories c ON p.category_id = c.id
-     WHERE p.is_featured = 1 AND p.status = "available"
-     ORDER BY p.created_at DESC
+     WHERE p.status = "available"
+     ORDER BY RAND(YEARWEEK(NOW()))
      LIMIT 4'
 );
 
@@ -192,7 +192,14 @@ $moisFr = ['', 'janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet',
             <div class="categories-showcase">
                 <?php foreach ($categories as $cat): ?>
                 <article class="categorie-showcase-card">
-                    <div class="categorie-showcase-icon"><?= $cat['icon'] ?: '📦' ?></div>
+                    <?php if (!empty($cat['image'])): ?>
+                        <div class="categorie-showcase-photo">
+                            <img src="<?= upload_url('categories/' . $cat['image']) ?>" alt="<?= e($cat['name']) ?>" class="categorie-showcase-img">
+                            <span class="categorie-showcase-emoji"><?= $cat['icon'] ?: '📦' ?></span>
+                        </div>
+                    <?php else: ?>
+                        <div class="categorie-showcase-icon"><?= $cat['icon'] ?: '📦' ?></div>
+                    <?php endif; ?>
                     <h3><?= e($cat['name']) ?></h3>
                     <p><?= $cat['products_count'] ?> article<?= $cat['products_count'] > 1 ? 's' : '' ?> disponible<?= $cat['products_count'] > 1 ? 's' : '' ?></p>
                     <?php if ($cat['min_price']): ?>

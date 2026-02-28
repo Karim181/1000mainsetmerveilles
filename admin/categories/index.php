@@ -29,11 +29,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($existing) {
                 $error = 'Une catégorie avec ce nom existe déjà.';
             } else {
-                dbExecute(
-                    'INSERT INTO categories (name, slug, icon, sort_order) VALUES (?, ?, ?, ?)',
-                    [$name, $slug, $icon, $sortOrder]
-                );
-                $success = 'Catégorie ajoutée.';
+                // Upload image si fournie
+                $imageFilename = null;
+                if (!empty($_FILES['image']['name'])) {
+                    $upload = uploadImage($_FILES['image'], 'categories');
+                    if ($upload['success']) {
+                        $imageFilename = $upload['filename'];
+                    } else {
+                        $error = $upload['error'];
+                    }
+                }
+
+                if (empty($error)) {
+                    dbExecute(
+                        'INSERT INTO categories (name, slug, icon, image, sort_order) VALUES (?, ?, ?, ?, ?)',
+                        [$name, $slug, $icon, $imageFilename, $sortOrder]
+                    );
+                    $success = 'Catégorie ajoutée.';
+                }
             }
         }
     }
@@ -44,6 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $name = trim($_POST['name'] ?? '');
         $icon = trim($_POST['icon'] ?? '');
         $sortOrder = (int)($_POST['sort_order'] ?? 0);
+        $deleteImage = isset($_POST['delete_image']);
 
         if (empty($name)) {
             $error = 'Le nom est obligatoire.';
@@ -53,11 +67,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($existing) {
                 $error = 'Une catégorie avec ce nom existe déjà.';
             } else {
-                dbExecute(
-                    'UPDATE categories SET name = ?, slug = ?, icon = ?, sort_order = ? WHERE id = ?',
-                    [$name, $slug, $icon, $sortOrder, $id]
-                );
-                $success = 'Catégorie modifiée.';
+                // Récupérer l'image actuelle
+                $current = dbFetchOne('SELECT image FROM categories WHERE id = ?', [$id]);
+                $imageFilename = $current['image'] ?? null;
+
+                // Supprimer l'image si demandé
+                if ($deleteImage && $imageFilename) {
+                    deleteImage($imageFilename, 'categories');
+                    $imageFilename = null;
+                }
+
+                // Upload nouvelle image si fournie
+                if (!empty($_FILES['image']['name'])) {
+                    $upload = uploadImage($_FILES['image'], 'categories');
+                    if ($upload['success']) {
+                        // Supprimer l'ancienne image
+                        if ($imageFilename) {
+                            deleteImage($imageFilename, 'categories');
+                        }
+                        $imageFilename = $upload['filename'];
+                    } else {
+                        $error = $upload['error'];
+                    }
+                }
+
+                if (empty($error)) {
+                    dbExecute(
+                        'UPDATE categories SET name = ?, slug = ?, icon = ?, image = ?, sort_order = ? WHERE id = ?',
+                        [$name, $slug, $icon, $imageFilename, $sortOrder, $id]
+                    );
+                    $success = 'Catégorie modifiée.';
+                }
             }
         }
     }
@@ -102,7 +142,7 @@ include ROOT_PATH . '/admin/includes/header.php';
 <!-- Formulaire d'ajout -->
 <div class="admin-card">
     <h2>Ajouter une catégorie</h2>
-    <form method="POST" class="inline-form">
+    <form method="POST" class="inline-form" enctype="multipart/form-data">
         <?= csrf_field() ?>
         <input type="hidden" name="action" value="add">
 
@@ -115,6 +155,11 @@ include ROOT_PATH . '/admin/includes/header.php';
             <div class="form-group" style="flex: 1;">
                 <label for="add_name">Nom *</label>
                 <input type="text" id="add_name" name="name" class="form-control" required placeholder="Ex: Meubles">
+            </div>
+
+            <div class="form-group">
+                <label for="add_image">Photo</label>
+                <input type="file" id="add_image" name="image" class="form-control" accept="image/jpeg,image/png,image/webp">
             </div>
 
             <div class="form-group">
@@ -142,6 +187,7 @@ include ROOT_PATH . '/admin/includes/header.php';
                     <th style="width: 60px;">Ordre</th>
                     <th style="width: 60px;">Emoji</th>
                     <th>Nom</th>
+                    <th>Photo</th>
                     <th>Slug</th>
                     <th>Produits</th>
                     <th>Actions</th>
@@ -150,7 +196,7 @@ include ROOT_PATH . '/admin/includes/header.php';
             <tbody>
                 <?php foreach ($categories as $cat): ?>
                 <tr>
-                    <form method="POST">
+                    <form method="POST" enctype="multipart/form-data">
                         <?= csrf_field() ?>
                         <input type="hidden" name="action" value="edit">
                         <input type="hidden" name="id" value="<?= $cat['id'] ?>">
@@ -163,6 +209,18 @@ include ROOT_PATH . '/admin/includes/header.php';
                         </td>
                         <td>
                             <input type="text" name="name" value="<?= e($cat['name']) ?>" class="form-control form-control-sm" required>
+                        </td>
+                        <td>
+                            <?php if ($cat['image']): ?>
+                                <div class="cat-image-preview">
+                                    <img src="<?= upload_url('categories/' . $cat['image']) ?>" alt="" style="width: 50px; height: 50px; object-fit: cover; border-radius: 8px;">
+                                    <label class="btn-delete-img" title="Supprimer la photo">
+                                        <input type="checkbox" name="delete_image" value="1" style="display: none;">
+                                        <span class="delete-img-icon">✕</span>
+                                    </label>
+                                </div>
+                            <?php endif; ?>
+                            <input type="file" name="image" class="form-control form-control-sm" accept="image/jpeg,image/png,image/webp" style="max-width: 150px; font-size: 0.75rem;">
                         </td>
                         <td>
                             <code><?= e($cat['slug']) ?></code>
@@ -215,6 +273,37 @@ code {
     padding: 4px 8px;
     border-radius: 4px;
     font-size: 0.85rem;
+}
+
+.cat-image-preview {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 5px;
+}
+
+.btn-delete-img {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    cursor: pointer;
+}
+
+.delete-img-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    background: #e74c3c;
+    color: white;
+    border-radius: 50%;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.btn-delete-img:has(input:checked) + img,
+.cat-image-preview:has(input:checked) img {
+    opacity: 0.3;
 }
 </style>
 

@@ -127,7 +127,7 @@ function route_admin(string $page): void
 function route_public(string $page): void
 {
     // Pages publiques nécessitant la base de données
-    $pagesWithDb = ['venir-chiner', 'agenda', 'actualites', 'actualite', 'produit'];
+    $pagesWithDb = ['home', 'venir-chiner', 'agenda', 'actualites', 'actualite', 'produit'];
     if (in_array($page, $pagesWithDb)) {
         require_once ROOT_PATH . '/config/database.php';
     }

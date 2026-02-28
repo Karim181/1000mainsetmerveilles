@@ -508,8 +508,105 @@
     color: #f17f0a;
 }
 
+.home-pepite-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+    border-radius: 30px 30px 0 0;
+}
+
 .home-pepites-cta {
     text-align: center;
+}
+
+/* ========== CATEGORIES HP ========== */
+.home-categories {
+    padding: 100px 0;
+    background: linear-gradient(180deg, #f5e6d3 0%, #e8f0ff 100%);
+}
+
+.home-categories-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 25px;
+    margin-bottom: 50px;
+}
+
+.home-categorie-card {
+    background: white;
+    padding: 30px 20px;
+    border-radius: 30px;
+    text-align: center;
+    box-shadow: 0 8px 30px rgba(43, 81, 159, 0.08);
+    transition: all 0.3s ease;
+    border: 3px solid transparent;
+}
+
+.home-categorie-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 40px rgba(43, 81, 159, 0.15);
+    border-color: #20b4b7;
+}
+
+.home-categorie-photo {
+    position: relative;
+    margin: -30px -20px 20px -20px;
+    border-radius: 30px 30px 0 0;
+    overflow: hidden;
+}
+
+.home-categorie-img {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+    display: block;
+}
+
+.home-categorie-emoji {
+    position: absolute;
+    bottom: -15px;
+    right: 12px;
+    font-size: 28px;
+    background: white;
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    box-shadow: 0 4px 12px rgba(43, 81, 159, 0.15);
+}
+
+.home-categorie-icon {
+    font-size: 48px;
+    margin-bottom: 15px;
+}
+
+.home-categorie-card h3 {
+    font-family: 'Fredoka', 'Quicksand', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: #2b519f;
+    margin-bottom: 8px;
+}
+
+.home-categorie-card p {
+    color: #8b7e74;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.home-categories-cta {
+    text-align: center;
+}
+
+.empty-message {
+    text-align: center;
+    color: #8b7e74;
+    font-style: italic;
+    padding: 40px 20px;
+    grid-column: 1 / -1;
 }
 
 /* ========== VALEURS ========== */
@@ -699,6 +796,12 @@
 }
 
 /* ========== RESPONSIVE HOME ========== */
+@media (max-width: 1024px) {
+    .home-categories-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
 @media (max-width: 768px) {
     .hero-final-content,
     .presentation-grid-final {
@@ -727,6 +830,10 @@
         grid-template-columns: 1fr;
     }
 
+    .home-categories-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
     .valeurs-grid,
     .equipe-grid {
         grid-template-columns: 1fr;
@@ -738,5 +845,11 @@
 
     .timeline-item::before {
         left: -32px;
+    }
+}
+
+@media (max-width: 480px) {
+    .home-categories-grid {
+        grid-template-columns: 1fr;
     }
 }

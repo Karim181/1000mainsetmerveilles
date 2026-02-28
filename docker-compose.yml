@@ -1,0 +1,49 @@
+services:
+  web:
+    build: .
+    environment:
+      - DB_HOST=db
+      - DB_NAME=1000mains
+      - DB_USER=1000mains
+      - DB_PASS=1000mains_staging
+      - APP_ENV=staging
+    volumes:
+      - ./uploads:/var/www/html/uploads
+      - ./logs:/var/www/html/logs
+    depends_on:
+      db:
+        condition: service_healthy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.1000mains-staging.rule=Host(`staging.1000mainsetmerveilles.fr`)"
+      - "traefik.http.routers.1000mains-staging.entrypoints=websecure"
+      - "traefik.http.routers.1000mains-staging.tls.certresolver=letsencrypt"
+      - "traefik.http.services.1000mains-staging.loadbalancer.server.port=80"
+    networks:
+      - traefik
+      - default
+    restart: unless-stopped
+
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root_staging_2026
+      MYSQL_DATABASE: 1000mains
+      MYSQL_USER: 1000mains
+      MYSQL_PASSWORD: 1000mains_staging
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./docker/init-db.sql:/docker-entrypoint-initdb.d/01-init.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    restart: unless-stopped
+
+volumes:
+  db_data:
+
+networks:
+  traefik:
+    external: true

@@ -4,6 +4,9 @@ logs/
 # Uploads utilisateurs
 uploads/
 
+# Base de données
+database/*.sql
+
 # Scripts sensibles
 database/create_test_users.php
 database/reset_password.php

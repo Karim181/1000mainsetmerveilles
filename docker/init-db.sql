@@ -1,22 +1,17 @@
 -- =============================================
--- 1000 Mains et Merveilles - Schema BDD
+-- 1000 Mains et Merveilles - Init Docker
+-- Schema + Seed (tout-en-un)
 -- =============================================
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
-
--- Création de la base si elle n'existe pas
-CREATE DATABASE IF NOT EXISTS `1000mains`
-    DEFAULT CHARACTER SET utf8mb4
-    COLLATE utf8mb4_unicode_ci;
 
 USE `1000mains`;
 
 -- =============================================
 -- Table: users
 -- =============================================
-DROP TABLE IF EXISTS `users`;
-CREATE TABLE `users` (
+CREATE TABLE IF NOT EXISTS `users` (
     `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
     `email` VARCHAR(255) NOT NULL,
     `password` VARCHAR(255) NOT NULL,
@@ -31,8 +26,7 @@ CREATE TABLE `users` (
 -- =============================================
 -- Table: sessions
 -- =============================================
-DROP TABLE IF EXISTS `sessions`;
-CREATE TABLE `sessions` (
+CREATE TABLE IF NOT EXISTS `sessions` (
     `id` VARCHAR(64) NOT NULL,
     `user_id` INT UNSIGNED NOT NULL,
     `expires_at` DATETIME NOT NULL,
@@ -47,8 +41,7 @@ CREATE TABLE `sessions` (
 -- =============================================
 -- Table: categories
 -- =============================================
-DROP TABLE IF EXISTS `categories`;
-CREATE TABLE `categories` (
+CREATE TABLE IF NOT EXISTS `categories` (
     `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(100) NOT NULL,
     `slug` VARCHAR(100) NOT NULL,
@@ -62,8 +55,7 @@ CREATE TABLE `categories` (
 -- =============================================
 -- Table: products
 -- =============================================
-DROP TABLE IF EXISTS `products`;
-CREATE TABLE `products` (
+CREATE TABLE IF NOT EXISTS `products` (
     `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(255) NOT NULL,
     `slug` VARCHAR(255) NOT NULL,
@@ -92,8 +84,7 @@ CREATE TABLE `products` (
 -- =============================================
 -- Table: news (actualites)
 -- =============================================
-DROP TABLE IF EXISTS `news`;
-CREATE TABLE `news` (
+CREATE TABLE IF NOT EXISTS `news` (
     `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
     `title` VARCHAR(255) NOT NULL,
     `slug` VARCHAR(255) NOT NULL,
@@ -117,8 +108,7 @@ CREATE TABLE `news` (
 -- =============================================
 -- Table: events (agenda)
 -- =============================================
-DROP TABLE IF EXISTS `events`;
-CREATE TABLE `events` (
+CREATE TABLE IF NOT EXISTS `events` (
     `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
     `title` VARCHAR(255) NOT NULL,
     `slug` VARCHAR(255) NOT NULL,
@@ -143,5 +133,22 @@ CREATE TABLE `events` (
 SET FOREIGN_KEY_CHECKS = 1;
 
 -- =============================================
--- Fin du schema
+-- Donnees initiales
 -- =============================================
+
+-- Admin par defaut (admin@1000mains.fr / Admin123!)
+INSERT INTO `users` (`email`, `password`, `name`, `role`) VALUES
+('admin@1000mains.fr', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Administrateur', 'admin');
+
+-- Categories produits
+INSERT INTO `categories` (`name`, `slug`, `icon`, `sort_order`) VALUES
+('Meubles', 'meubles', '🪑', 1),
+('Luminaires', 'luminaires', '💡', 2),
+('Decoration', 'decoration', '🖼️', 3),
+('Vetements', 'vetements', '👗', 4),
+('Livres', 'livres', '📚', 5),
+('Jeux & Jouets', 'jeux-jouets', '🎮', 6),
+('Vaisselle', 'vaisselle', '🍽️', 7),
+('Bricolage', 'bricolage', '🔧', 8),
+('Loisirs creatifs', 'loisirs-creatifs', '🎨', 9),
+('Divers', 'divers', '📦', 10);

@@ -1,0 +1,11 @@
+.git
+.gitignore
+.dockerignore
+docker-compose.yml
+Dockerfile
+docker/
+logs/
+*.md
+database/test_*.sql
+database/create_test_users.php
+database/reset_password.php

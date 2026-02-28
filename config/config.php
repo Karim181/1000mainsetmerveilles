@@ -4,8 +4,8 @@
  * 1000 Mains et Merveilles
  */
 
-// Environnement (development / production)
-define('ENVIRONMENT', 'development');
+// Environnement (development / staging / production)
+define('ENVIRONMENT', getenv('APP_ENV') ?: 'development');
 
 // Affichage erreurs selon environnement
 if (ENVIRONMENT === 'development') {
@@ -28,10 +28,10 @@ define('LOG_PATH', ROOT_PATH . '/logs');
 // =====================================
 // Configuration BDD
 // =====================================
-define('DB_HOST', 'localhost');
-define('DB_NAME', '1000mains');
-define('DB_USER', 'root');
-define('DB_PASS', '');
+define('DB_HOST', getenv('DB_HOST') ?: 'localhost');
+define('DB_NAME', getenv('DB_NAME') ?: '1000mains');
+define('DB_USER', getenv('DB_USER') ?: 'root');
+define('DB_PASS', getenv('DB_PASS') ?: '');
 define('DB_CHARSET', 'utf8mb4');
 
 // =====================================

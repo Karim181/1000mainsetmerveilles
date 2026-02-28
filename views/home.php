@@ -1,3 +1,28 @@
+<?php
+/**
+ * Page d'accueil - Qui sommes-nous
+ * 1000 Mains et Merveilles
+ */
+
+// Récupérer les pépites (rotation hebdomadaire automatique)
+$pepites = dbFetchAll(
+    'SELECT p.*, c.name as category_name, c.icon as category_icon
+     FROM products p
+     LEFT JOIN categories c ON p.category_id = c.id
+     WHERE p.status = "available"
+     ORDER BY RAND(YEARWEEK(NOW()))
+     LIMIT 3'
+);
+
+// Récupérer les catégories avec compteur
+$categories = dbFetchAll(
+    'SELECT c.*, COUNT(p.id) as products_count
+     FROM categories c
+     LEFT JOIN products p ON c.id = p.category_id AND p.status = "available"
+     GROUP BY c.id
+     ORDER BY c.sort_order'
+);
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -78,48 +103,64 @@
             </div>
 
             <div class="home-pepites-grid">
-                <article class="home-pepite-card">
-                    <div class="home-pepite-photo">
-                        <div class="photo-placeholder-final home-pepite-photo-size">
-                            <div class="photo-icon-final">📸</div>
+                <?php if (empty($pepites)): ?>
+                    <p class="empty-message">Aucune pepite en ce moment. Revenez bientot !</p>
+                <?php else: ?>
+                    <?php foreach ($pepites as $product): ?>
+                    <article class="home-pepite-card">
+                        <div class="home-pepite-photo">
+                            <?php if ($product['image']): ?>
+                                <img src="<?= upload_url('products/' . $product['image']) ?>" alt="<?= e($product['name']) ?>" class="home-pepite-img">
+                            <?php else: ?>
+                                <div class="photo-placeholder-final home-pepite-photo-size">
+                                    <div class="photo-icon-final">📸</div>
+                                </div>
+                            <?php endif; ?>
                         </div>
-                    </div>
-                    <div class="home-pepite-info">
-                        <span class="home-pepite-cat">🪑 Meubles</span>
-                        <h3>Commode vintage annees 60</h3>
-                        <span class="home-pepite-prix">45 &euro;</span>
-                    </div>
-                </article>
-
-                <article class="home-pepite-card">
-                    <div class="home-pepite-photo">
-                        <div class="photo-placeholder-final home-pepite-photo-size">
-                            <div class="photo-icon-final">📸</div>
+                        <div class="home-pepite-info">
+                            <span class="home-pepite-cat"><?= $product['category_icon'] ?> <?= e($product['category_name']) ?></span>
+                            <h3><?= e($product['name']) ?></h3>
+                            <span class="home-pepite-prix"><?= number_format($product['price'], 0, ',', ' ') ?> &euro;</span>
                         </div>
-                    </div>
-                    <div class="home-pepite-info">
-                        <span class="home-pepite-cat">🖼️ Decoration</span>
-                        <h3>Miroir Art Deco dore</h3>
-                        <span class="home-pepite-prix">25 &euro;</span>
-                    </div>
-                </article>
-
-                <article class="home-pepite-card">
-                    <div class="home-pepite-photo">
-                        <div class="photo-placeholder-final home-pepite-photo-size">
-                            <div class="photo-icon-final">📸</div>
-                        </div>
-                    </div>
-                    <div class="home-pepite-info">
-                        <span class="home-pepite-cat">💡 Luminaires</span>
-                        <h3>Lampe industrielle metal</h3>
-                        <span class="home-pepite-prix">18 &euro;</span>
-                    </div>
-                </article>
+                    </article>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </div>
 
             <div class="home-pepites-cta">
                 <a href="<?= url('venir-chiner') ?>" class="btn-primary-final">Voir toutes nos pepites →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== NOS CATEGORIES ========== -->
+    <section class="home-categories">
+        <div class="container">
+            <div class="section-header-final">
+                <span class="section-tag-final tag-turquoise">Nos rayons 🏷️</span>
+                <h2>Explorez nos <span class="highlight-turquoise">categories</span></h2>
+                <p>Tout un univers d'objets a decouvrir a prix solidaires</p>
+            </div>
+
+            <div class="home-categories-grid">
+                <?php foreach ($categories as $cat): ?>
+                <article class="home-categorie-card">
+                    <?php if (!empty($cat['image'])): ?>
+                        <div class="home-categorie-photo">
+                            <img src="<?= upload_url('categories/' . $cat['image']) ?>" alt="<?= e($cat['name']) ?>" class="home-categorie-img">
+                            <span class="home-categorie-emoji"><?= $cat['icon'] ?: '📦' ?></span>
+                        </div>
+                    <?php else: ?>
+                        <div class="home-categorie-icon"><?= $cat['icon'] ?: '📦' ?></div>
+                    <?php endif; ?>
+                    <h3><?= e($cat['name']) ?></h3>
+                    <p><?= $cat['products_count'] ?> article<?= $cat['products_count'] > 1 ? 's' : '' ?></p>
+                </article>
+                <?php endforeach; ?>
+            </div>
+
+            <div class="home-categories-cta">
+                <a href="<?= url('venir-chiner') ?>" class="btn-primary-final">Voir toutes nos trouvailles →</a>
             </div>
         </div>
     </section>
