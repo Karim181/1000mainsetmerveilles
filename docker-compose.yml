@@ -15,7 +15,7 @@ services:
         condition: service_healthy
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.1000mains-staging.rule=Host(`staging.karimbuilds.com`)"
+      - "traefik.http.routers.1000mains-staging.rule=Host(`1000mains.karimbuilds.com`)"
       - "traefik.http.routers.1000mains-staging.entrypoints=websecure"
       - "traefik.http.routers.1000mains-staging.tls.certresolver=letsencrypt"
       - "traefik.http.services.1000mains-staging.loadbalancer.server.port=80"
