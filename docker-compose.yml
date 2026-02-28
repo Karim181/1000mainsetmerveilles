@@ -20,7 +20,7 @@ services:
       - "traefik.http.routers.1000mains-staging.tls.certresolver=letsencrypt"
       - "traefik.http.services.1000mains-staging.loadbalancer.server.port=80"
     networks:
-      - traefik
+      - proxy
       - default
     restart: unless-stopped
 
@@ -45,5 +45,5 @@ volumes:
   db_data:
 
 networks:
-  traefik:
+  proxy:
     external: true
