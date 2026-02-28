@@ -3,7 +3,6 @@
 .dockerignore
 docker-compose.yml
 Dockerfile
-docker/
 logs/
 *.md
 database/test_*.sql
