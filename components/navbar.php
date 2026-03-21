@@ -20,13 +20,14 @@
             </button>
 
             <ul class="navbar-menu-final">
-                <li><a href="<?= url() ?>" class="<?= is_page('home') ? 'nav-active' : '' ?>">Qui sommes-nous ?</a></li>
-                <li><a href="<?= url('la-ressourcerie') ?>" class="<?= is_page('la-ressourcerie') ? 'nav-active' : '' ?>">La Ressourcerie</a></li>
-                <li><a href="<?= url('venir-chiner') ?>" class="<?= is_page('venir-chiner') ? 'nav-active' : '' ?>">Venir chiner</a></li>
-                <li><a href="<?= url('dons') ?>" class="nav-highlight <?= is_page('dons') ? 'nav-active' : '' ?>">Faire un don</a></li>
+                <li><a href="<?= url() ?>" class="<?= is_page('home') ? 'nav-active' : '' ?>"><?= page_content('home', 'nav-label', 'Accueil') ?></a></li>
+                <li><a href="<?= url('qui-sommes-nous') ?>" class="<?= is_page('qui-sommes-nous') ? 'nav-active' : '' ?>"><?= page_content('qui-sommes-nous', 'nav-label', 'Qui sommes-nous ?') ?></a></li>
+                <li><a href="<?= url('la-ressourcerie') ?>" class="<?= is_page('la-ressourcerie') ? 'nav-active' : '' ?>"><?= page_content('la-ressourcerie', 'nav-label', 'La Ressourcerie') ?></a></li>
+                <li><a href="<?= url('venir-chiner') ?>" class="<?= is_page('venir-chiner') ? 'nav-active' : '' ?>"><?= page_content('venir-chiner', 'nav-label', 'Venir chiner') ?></a></li>
+                <li><a href="<?= url('dons') ?>" class="nav-highlight <?= is_page('dons') ? 'nav-active' : '' ?>"><?= page_content('dons', 'nav-label', 'Faire un don') ?></a></li>
                 <li><a href="<?= url('agenda') ?>" class="<?= is_page('agenda') ? 'nav-active' : '' ?>">Agenda</a></li>
                 <li><a href="<?= url('actualites') ?>" class="<?= is_page('actualites') || is_page('actualite') ? 'nav-active' : '' ?>">Actualités</a></li>
-                <li><a href="<?= url('nous-rejoindre') ?>" class="btn-nav-final <?= is_page('nous-rejoindre') ? 'nav-active' : '' ?>">Nous rejoindre</a></li>
+                <li><a href="<?= url('nous-rejoindre') ?>" class="btn-nav-final <?= is_page('nous-rejoindre') ? 'nav-active' : '' ?>"><?= page_content('nous-rejoindre', 'nav-label', 'Nous rejoindre') ?></a></li>
             </ul>
         </div>
     </div>

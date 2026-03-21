@@ -1,6 +1,6 @@
 <?php
 /**
- * Page d'accueil - Qui sommes-nous
+ * Page d'accueil - Landing page
  * 1000 Mains et Merveilles
  */
 
@@ -28,7 +28,8 @@ $categories = dbFetchAll(
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>1000 Mains et Merveilles - Association de reemploi solidaire</title>
+    <title><?= e(page_content('home', 'page-title', '1000 Mains et Merveilles - Association de reemploi solidaire')) ?></title>
+    <meta name="description" content="<?= e(page_content('home', 'page-meta', 'Association de reemploi solidaire dans les Yvelines. Boutique a prix doux, ateliers creatifs et depot de dons a Plaisir et Chavenay.')) ?>">
 
     <!-- Favicons -->
     <link rel="icon" type="image/x-icon" href="<?= asset('images/favicon.ico') ?>">
@@ -49,20 +50,30 @@ $categories = dbFetchAll(
 
     <?php include ROOT_PATH . '/components/navbar.php'; ?>
 
-    <!-- ========== HERO PAGE ========== -->
-    <section class="page-hero">
+    <!-- ========== HERO PRINCIPAL ========== -->
+    <section class="landing-hero">
         <div class="container">
-            <div class="page-hero-content">
-                <div class="page-hero-text">
-                    <span class="hero-label-final">💙 Notre histoire</span>
-                    <h1>Qui sommes-nous <span class="highlight-turquoise">?</span></h1>
-                    <p class="hero-description-final">Une association engagee depuis plus de 12 ans pour le reemploi, la solidarite et le lien social sur le territoire des Yvelines.</p>
-                </div>
-                <div class="page-hero-photo">
-                    <div class="photo-placeholder-final hero-page-size">
-                        <div class="photo-icon-final">📸</div>
-                        <p>Photo : equipe<br>benevoles ensemble</p>
+            <div class="landing-hero-content">
+                <div class="landing-hero-text">
+                    <span class="hero-label-final">💙 <?= page_content('home', 'hero-label', 'Reemploi solidaire dans les Yvelines') ?></span>
+                    <h1><?= page_content('home', 'hero-title', 'Donnez une <span class="highlight-turquoise">seconde vie</span> aux objets') ?></h1>
+                    <p class="hero-description-final"><?= page_content('home', 'hero-description', 'Boutique a prix doux, depot de dons, ateliers creatifs : rejoignez une aventure humaine et ecologique pres de chez vous.') ?></p>
+                    <div class="landing-hero-cta">
+                        <a href="<?= url('venir-chiner') ?>" class="btn-primary-final">Decouvrir la boutique</a>
+                        <a href="<?= url('dons') ?>" class="btn-secondary-final">Faire un don</a>
                     </div>
+                    <?php include ROOT_PATH . '/components/hero-chiffres.php'; ?>
+                </div>
+                <div class="landing-hero-photo">
+                    <?php $heroImg = page_image('home', 'hero-image'); ?>
+                    <?php if ($heroImg): ?>
+                        <img src="<?= upload_url('pages/' . $heroImg) ?>" alt="1000 Mains et Merveilles" class="hero-page-img" style="width: 100%; border-radius: 30px;">
+                    <?php else: ?>
+                        <div class="photo-placeholder-final hero-page-size">
+                            <div class="photo-icon-final">📸</div>
+                            <p>Photo : boutique<br>accueillante</p>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -73,22 +84,35 @@ $categories = dbFetchAll(
         </div>
     </section>
 
-    <!-- ========== NOTRE MISSION ========== -->
-    <section class="about-mission">
+    <!-- ========== NOS ACTIONS ========== -->
+    <section class="landing-actions">
         <div class="container">
-            <div class="about-mission-grid">
-                <div class="about-mission-photo">
-                    <div class="photo-placeholder-final square-final">
-                        <div class="photo-icon-final">📸</div>
-                        <p>Photo : atelier<br>reparation</p>
-                    </div>
-                </div>
-                <div class="about-mission-text">
-                    <span class="section-tag-final tag-turquoise">Notre mission 🌱</span>
-                    <h2>Donner une <span class="highlight-turquoise">seconde vie</span> aux objets</h2>
-                    <p>1000 Mains et Merveilles est une association loi 1901 qui oeuvre pour le reemploi et la reduction des dechets. Nous collectons, valorisons et redistribuons des objets du quotidien a prix solidaire.</p>
-                    <p>Notre action s'inscrit dans une demarche d'economie circulaire et de solidarite locale, en proposant des objets de qualite accessibles a tous.</p>
-                </div>
+            <div class="section-header-final">
+                <span class="section-tag-final tag-turquoise"><?= page_content('home', 'tag-actions', 'Ce que nous faisons 🌱') ?></span>
+                <h2><?= page_content('home', 'actions-title', 'Trois piliers pour une <span class="highlight-turquoise">action solidaire</span>') ?></h2>
+            </div>
+
+            <div class="landing-actions-grid">
+                <article class="landing-action-card">
+                    <div class="landing-action-icon">🏪</div>
+                    <h3>La Ressourcerie</h3>
+                    <p>Un lieu ou les objets retrouvent une seconde vie. Nous collectons, valorisons et revendons a prix solidaire.</p>
+                    <a href="<?= url('la-ressourcerie') ?>" class="landing-action-link">En savoir plus →</a>
+                </article>
+
+                <article class="landing-action-card">
+                    <div class="landing-action-icon">🎨</div>
+                    <h3>Ateliers creatifs</h3>
+                    <p>Apprenez a reparer, transformer et creer lors de nos ateliers ouverts a tous, petits et grands.</p>
+                    <a href="<?= url('agenda') ?>" class="landing-action-link">Voir le programme →</a>
+                </article>
+
+                <article class="landing-action-card">
+                    <div class="landing-action-icon">🤝</div>
+                    <h3>Solidarite locale</h3>
+                    <p>Plus de 200 benevoles engages pour creer du lien social et rendre le reemploi accessible a tous.</p>
+                    <a href="<?= url('qui-sommes-nous') ?>" class="landing-action-link">Decouvrir l'asso →</a>
+                </article>
             </div>
         </div>
     </section>
@@ -97,9 +121,9 @@ $categories = dbFetchAll(
     <section class="home-pepites">
         <div class="container">
             <div class="section-header-final">
-                <span class="section-tag-final tag-orange">A ne pas manquer 💎</span>
-                <h2>Les pepites <span class="highlight-turquoise">de la semaine</span></h2>
-                <p>Nos coups de coeur du moment, disponibles en boutique</p>
+                <span class="section-tag-final tag-orange"><?= page_content('home', 'tag-pepites', 'A ne pas manquer 💎') ?></span>
+                <h2><?= page_content('home', 'pepites-title', 'Les pepites <span class="highlight-turquoise">de la semaine</span>') ?></h2>
+                <p><?= page_content('home', 'pepites-subtitle', 'Nos coups de coeur du moment, disponibles en boutique') ?></p>
             </div>
 
             <div class="home-pepites-grid">
@@ -137,9 +161,9 @@ $categories = dbFetchAll(
     <section class="home-categories">
         <div class="container">
             <div class="section-header-final">
-                <span class="section-tag-final tag-turquoise">Nos rayons 🏷️</span>
-                <h2>Explorez nos <span class="highlight-turquoise">categories</span></h2>
-                <p>Tout un univers d'objets a decouvrir a prix solidaires</p>
+                <span class="section-tag-final tag-turquoise"><?= page_content('home', 'tag-categories', 'Nos rayons 🏷️') ?></span>
+                <h2><?= page_content('home', 'categories-title', 'Explorez nos <span class="highlight-turquoise">categories</span>') ?></h2>
+                <p><?= page_content('home', 'categories-subtitle', 'Tout un univers d\'objets a decouvrir a prix solidaires') ?></p>
             </div>
 
             <div class="home-categories-grid">
@@ -165,119 +189,29 @@ $categories = dbFetchAll(
         </div>
     </section>
 
-    <!-- ========== NOS VALEURS ========== -->
-    <section class="about-valeurs">
+    <!-- ========== RESEAUX SOCIAUX ========== -->
+    <section class="home-social">
         <div class="container">
             <div class="section-header-final">
-                <span class="section-tag-final tag-orange">Nos valeurs ❤️</span>
-                <h2>Ce qui nous <span class="highlight-turquoise">anime</span></h2>
-                <p>Trois piliers guident notre action au quotidien</p>
+                <span class="section-tag-final tag-turquoise">Suivez-nous</span>
+                <h2>Retrouvez-nous sur les <span class="highlight-turquoise">reseaux</span></h2>
+                <p>Arrivages, coulisses, evenements... ne manquez rien de notre actualite !</p>
             </div>
-
-            <div class="valeurs-grid">
-                <article class="valeur-card valeur-card-blue">
-                    <div class="valeur-icon">🤝</div>
-                    <h3>Solidarite</h3>
-                    <p>Nous creons du lien social en rendant accessible a tous des objets de qualite. Chaque don, chaque achat, chaque atelier est une occasion de tisser des liens.</p>
-                </article>
-
-                <article class="valeur-card valeur-card-turquoise">
-                    <div class="valeur-icon">🌍</div>
-                    <h3>Ecologie</h3>
-                    <p>Reduire les dechets, prolonger la vie des objets, sensibiliser au reemploi : notre engagement ecologique est au coeur de chaque action.</p>
-                </article>
-
-                <article class="valeur-card valeur-card-orange">
-                    <div class="valeur-icon">✨</div>
-                    <h3>Creativite</h3>
-                    <p>A travers nos ateliers et notre ressourcerie, nous encourageons la creativite et le savoir-faire. Transformer, reparer, reinventer : c'est notre quotidien.</p>
-                </article>
-            </div>
-        </div>
-    </section>
-
-    <!-- ========== NOTRE EQUIPE ========== -->
-    <section class="about-equipe">
-        <div class="container">
-            <div class="section-header-final">
-                <span class="section-tag-final tag-turquoise">Notre equipe 👥</span>
-                <h2>Une equipe <span class="highlight-turquoise">engagee</span></h2>
-                <p>Plus de 200 benevoles mobilises au quotidien</p>
-            </div>
-
-            <div class="equipe-grid">
-                <article class="equipe-card">
-                    <div class="equipe-photo">
-                        <div class="photo-placeholder-final equipe-photo-size">
-                            <div class="photo-icon-final">📸</div>
-                        </div>
+            <div class="home-social-grid">
+                <a href="https://www.facebook.com/1000mainsetmerveilles" target="_blank" rel="noopener noreferrer" class="home-social-card home-social-facebook">
+                    <div class="home-social-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
                     </div>
-                    <div class="equipe-info">
-                        <span class="equipe-stat">200+</span>
-                        <h3>Benevoles</h3>
-                        <p>Le coeur battant de notre association, presents chaque jour pour accueillir, trier et accompagner.</p>
+                    <h3>Facebook</h3>
+                    <p>Suivez nos actualites et evenements</p>
+                </a>
+                <a href="https://www.instagram.com/1000mainsetmerveilles" target="_blank" rel="noopener noreferrer" class="home-social-card home-social-instagram">
+                    <div class="home-social-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
                     </div>
-                </article>
-
-                <article class="equipe-card">
-                    <div class="equipe-photo">
-                        <div class="photo-placeholder-final equipe-photo-size">
-                            <div class="photo-icon-final">📸</div>
-                        </div>
-                    </div>
-                    <div class="equipe-info">
-                        <span class="equipe-stat">3</span>
-                        <h3>Lieux</h3>
-                        <p>Saint-Germain-en-Laye, Plaisir et Chavenay : trois espaces pour accueillir vos dons et vous proposer des merveilles.</p>
-                    </div>
-                </article>
-
-                <article class="equipe-card">
-                    <div class="equipe-photo">
-                        <div class="photo-placeholder-final equipe-photo-size">
-                            <div class="photo-icon-final">📸</div>
-                        </div>
-                    </div>
-                    <div class="equipe-info">
-                        <span class="equipe-stat">12 ans</span>
-                        <h3>D'experience</h3>
-                        <p>Depuis 2012, nous oeuvrons pour un monde plus solidaire et plus respectueux de l'environnement.</p>
-                    </div>
-                </article>
-            </div>
-        </div>
-    </section>
-
-    <!-- ========== NOTRE HISTOIRE (Timeline) ========== -->
-    <section class="about-histoire">
-        <div class="container">
-            <div class="section-header-final">
-                <span class="section-tag-final tag-orange">Notre parcours 📅</span>
-                <h2>Notre <span class="highlight-turquoise">histoire</span></h2>
-                <p>Les grandes etapes de notre aventure</p>
-            </div>
-
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <h3>Creation de l'association</h3>
-                        <p>Naissance de 1000 Mains et Merveilles avec une poignee de benevoles passionnes par le reemploi.</p>
-                    </div>
-                </div>
-
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <h3>Installation a Plaisir</h3>
-                        <p>Notre ressourcerie ouvre ses portes et accueille ses premiers donateurs et clients.</p>
-                    </div>
-                </div>
-
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <h3>Depot a Chavenay</h3>
-                        <p>Un nouveau point de depot pour faciliter les dons pres de chez vous.</p>
-                    </div>
-                </div>
+                    <h3>Instagram</h3>
+                    <p>Decouvrez nos pepites en photos</p>
+                </a>
             </div>
         </div>
     </section>
@@ -305,48 +239,9 @@ $categories = dbFetchAll(
         </div>
     </section>
 
-    <!-- ========== FOOTER ========== -->
-    <footer class="footer-final">
-        <div class="container">
-            <div class="footer-final-grid">
-                <div class="footer-main-final">
-                    <img src="<?= asset('images/1000-mains-et-merveilles-2.png') ?>" alt="Logo" class="footer-logo-final">
-                    <p class="footer-tagline-final">Ensemble, donnons une seconde vie aux objets et creons du lien 💙</p>
-                </div>
-                <div class="footer-links-final">
-                    <h4>Navigation</h4>
-                    <ul>
-                        <li><a href="<?= url() ?>">Qui sommes-nous ?</a></li>
-                        <li><a href="<?= url('la-ressourcerie') ?>">La Ressourcerie</a></li>
-                        <li><a href="<?= url('venir-chiner') ?>">Venir chiner</a></li>
-                        <li><a href="<?= url('dons') ?>">📦 Faire un don</a></li>
-                        <li><a href="<?= url('agenda') ?>">Agenda</a></li>
-                    </ul>
-                </div>
-                <div class="footer-links-final">
-                    <h4>Nous contacter</h4>
-                    <ul>
-                        <li><a href="<?= url('nous-rejoindre') ?>">Nous rejoindre</a></li>
-                    </ul>
-                </div>
-                <div class="footer-newsletter-final">
-                    <h4>Newsletter 📬</h4>
-                    <p>Restez informes de nos actualites</p>
-                    <form class="newsletter-final" action="#" method="post">
-                        <input type="email" placeholder="Votre email" required>
-                        <button type="submit">→</button>
-                    </form>
-                </div>
-            </div>
-            <div class="footer-bottom-final">
-                <p>&copy; 2026 1000 Mains et Merveilles &bull; Association loi 1901 💙</p>
-                <div class="footer-legal-final">
-                    <a href="<?= url('mentions-legales') ?>">Mentions legales</a>
-                    <a href="<?= url('confidentialite') ?>">Confidentialite</a>
-                </div>
-            </div>
-        </div>
-    </footer>
+    <?php include ROOT_PATH . '/components/footer.php'; ?>
+
+    <?php include ROOT_PATH . '/components/newsletter-modal.php'; ?>
 
 </body>
 </html>

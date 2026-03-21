@@ -88,6 +88,16 @@ function route_admin(string $page): void
             'edit' => '/admin/users/edit.php',
             'delete' => '/admin/users/delete.php',
         ],
+        'pages' => [
+            'index' => '/admin/pages/index.php',
+            'edit' => '/admin/pages/edit.php',
+        ],
+        'timeline' => [
+            'index' => '/admin/timeline/index.php',
+            'create' => '/admin/timeline/create.php',
+            'edit' => '/admin/timeline/edit.php',
+            'delete' => '/admin/timeline/delete.php',
+        ],
         'maintenance' => [
             'index' => '/admin/maintenance/index.php',
         ],
@@ -127,14 +137,13 @@ function route_admin(string $page): void
 function route_public(string $page): void
 {
     // Pages publiques nécessitant la base de données
-    $pagesWithDb = ['home', 'venir-chiner', 'agenda', 'actualites', 'actualite', 'produit'];
+    $pagesWithDb = ['home', 'qui-sommes-nous', 'la-ressourcerie', 'dons', 'venir-chiner', 'nous-rejoindre', 'agenda', 'actualites', 'actualite', 'produit'];
     if (in_array($page, $pagesWithDb)) {
         require_once ROOT_PATH . '/config/database.php';
     }
 
     // Redirections 301 (ancien site WordPress)
     $redirects = [
-        'qui-sommes-nous' => 'home',
         'ressourcerie-saint-germain' => 'la-ressourcerie',
         'ressourcerie-plaisir' => 'la-ressourcerie',
         'nos-ateliers-collectifs' => 'agenda',

@@ -200,6 +200,56 @@ function component(string $name, array $data = []): void
 }
 
 /**
+ * Récupère un contenu éditable de page depuis la BDD.
+ * Retourne le texte par défaut si aucun contenu n'est trouvé.
+ */
+function page_content(string $pageSlug, string $sectionKey, string $default = ''): string
+{
+    static $cache = [];
+
+    $cacheKey = $pageSlug . ':' . $sectionKey;
+    if (isset($cache[$cacheKey])) {
+        return $cache[$cacheKey];
+    }
+
+    if (!function_exists('dbFetchOne')) {
+        return $default;
+    }
+
+    try {
+        $row = dbFetchOne(
+            'SELECT content_text, content_image, content_type FROM page_contents WHERE page_slug = ? AND section_key = ?',
+            [$pageSlug, $sectionKey]
+        );
+    } catch (\Exception $e) {
+        return $default;
+    }
+
+    if (!$row) {
+        $cache[$cacheKey] = $default;
+        return $default;
+    }
+
+    if ($row['content_type'] === 'image') {
+        $result = $row['content_image'] ?: $default;
+    } else {
+        $result = $row['content_text'] ?: $default;
+    }
+
+    $cache[$cacheKey] = $result;
+    return $result;
+}
+
+/**
+ * Récupère une image de contenu de page.
+ */
+function page_image(string $pageSlug, string $sectionKey): ?string
+{
+    $image = page_content($pageSlug, $sectionKey);
+    return $image ?: null;
+}
+
+/**
  * Dump and die - Affiche des variables et arrête l'exécution (debug).
  *
  * @param mixed ...$vars Variables à afficher

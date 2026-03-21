@@ -64,6 +64,16 @@ if (preg_match("#/$adminSlug/([a-z\-]+)#", $requestUri, $matches)) {
                     <span>Événements</span>
                 </a>
 
+                <a href="<?= admin_url('pages') ?>" class="nav-item <?= $currentSection === 'pages' ? 'active' : '' ?>">
+                    <span class="nav-icon">📝</span>
+                    <span>Pages</span>
+                </a>
+
+                <a href="<?= admin_url('timeline') ?>" class="nav-item <?= $currentSection === 'timeline' ? 'active' : '' ?>">
+                    <span class="nav-icon">🕰️</span>
+                    <span>Frise chrono</span>
+                </a>
+
                 <?php if (auth_is_admin()): ?>
                 <div class="nav-section">Administration</div>
 

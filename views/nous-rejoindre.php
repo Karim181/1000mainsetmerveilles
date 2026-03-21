@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nous rejoindre - Contact | 1000 Mains et Merveilles</title>
-    <meta name="description" content="Rejoignez notre equipe de benevoles ou contactez-nous. Association de reemploi solidaire dans les Yvelines (78).">
+    <title><?= e(page_content('nous-rejoindre', 'page-title', 'Nous rejoindre - 1000 Mains et Merveilles')) ?></title>
+    <meta name="description" content="<?= e(page_content('nous-rejoindre', 'page-meta', 'Rejoignez l aventure 1000 Mains et Merveilles. Devenez benevole ou partenaire de notre association de reemploi solidaire.')) ?>">
 
     <!-- Favicons -->
     <link rel="icon" type="image/x-icon" href="<?= asset('images/favicon.ico') ?>">
@@ -30,15 +30,21 @@
         <div class="container">
             <div class="page-hero-content">
                 <div class="page-hero-text">
-                    <span class="hero-label-final">Rejoignez-nous</span>
-                    <h1>Ensemble, <span class="highlight-turquoise">agissons</span></h1>
-                    <p class="hero-description-final">Devenez benevole, proposez un atelier ou contactez-nous pour toute question. Chaque main compte !</p>
+                    <span class="hero-label-final">🤝 <?= page_content('nous-rejoindre', 'hero-label', 'Rejoignez-nous') ?></span>
+                    <h1><?= page_content('nous-rejoindre', 'hero-title', 'Ensemble, <span class="highlight-turquoise">agissons</span>') ?></h1>
+                    <p class="hero-description-final"><?= page_content('nous-rejoindre', 'hero-description', 'Devenez benevole, proposez un atelier ou contactez-nous pour toute question. Chaque main compte !') ?></p>
+                    <?php include ROOT_PATH . '/components/hero-chiffres.php'; ?>
                 </div>
                 <div class="page-hero-photo">
-                    <div class="photo-placeholder-final hero-page-size">
-                        <div class="photo-icon-final">📸</div>
-                        <p>Photo : equipe<br>benevoles</p>
-                    </div>
+                    <?php $heroImg = page_image('nous-rejoindre', 'hero-image'); ?>
+                    <?php if ($heroImg): ?>
+                        <img src="<?= upload_url('pages/' . $heroImg) ?>" alt="Nous rejoindre" class="hero-page-img" style="width: 100%; border-radius: 30px;">
+                    <?php else: ?>
+                        <div class="photo-placeholder-final hero-page-size">
+                            <div class="photo-icon-final">📸</div>
+                            <p>Photo : equipe<br>benevoles</p>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -53,7 +59,7 @@
     <section class="rejoindre-benevole">
         <div class="container">
             <div class="section-header-final">
-                <span class="section-tag-final tag-turquoise">Benevolat</span>
+                <span class="section-tag-final tag-turquoise"><?= page_content('nous-rejoindre', 'tag-benevolat', 'Benevolat') ?></span>
                 <h2>Devenez <span class="highlight-turquoise">benevole</span></h2>
                 <p>Rejoignez une equipe dynamique et engagee pour le reemploi et la solidarite.</p>
             </div>
@@ -104,7 +110,7 @@
             <div class="contact-grid">
                 <div class="contact-form-wrapper">
                     <div class="section-header-final text-left">
-                        <span class="section-tag-final tag-orange">Contact</span>
+                        <span class="section-tag-final tag-orange"><?= page_content('nous-rejoindre', 'tag-contact', 'Contact') ?></span>
                         <h2>Ecrivez-<span class="highlight-turquoise">nous</span></h2>
                         <p>Une question, une suggestion, envie de nous rejoindre ? Remplissez le formulaire ci-dessous.</p>
                     </div>
@@ -232,47 +238,9 @@
         </div>
     </section>
 
-    <!-- ========== FOOTER ========== -->
-    <footer class="footer-final">
-        <div class="container">
-            <div class="footer-final-grid">
-                <div class="footer-main-final">
-                    <img src="<?= asset('images/1000-mains-et-merveilles-2.png') ?>" alt="Logo" class="footer-logo-final">
-                    <p class="footer-tagline-final">Ensemble, donnons une seconde vie aux objets et creons du lien</p>
-                </div>
-                <div class="footer-links-final">
-                    <h4>Navigation</h4>
-                    <ul>
-                        <li><a href="<?= url() ?>">Qui sommes-nous ?</a></li>
-                        <li><a href="<?= url('la-ressourcerie') ?>">La Ressourcerie</a></li>
-                        <li><a href="<?= url('dons') ?>">Faire un don</a></li>
-                        <li><a href="<?= url('agenda') ?>">Agenda</a></li>
-                    </ul>
-                </div>
-                <div class="footer-links-final">
-                    <h4>Nous contacter</h4>
-                    <ul>
-                        <li><a href="<?= url('nous-rejoindre') ?>">Nous rejoindre</a></li>
-                    </ul>
-                </div>
-                <div class="footer-newsletter-final">
-                    <h4>Newsletter</h4>
-                    <p>Restez informes de nos actualites</p>
-                    <form class="newsletter-final" action="#" method="post">
-                        <input type="email" placeholder="Votre email" required>
-                        <button type="submit">→</button>
-                    </form>
-                </div>
-            </div>
-            <div class="footer-bottom-final">
-                <p>&copy; 2026 1000 Mains et Merveilles - Association loi 1901</p>
-                <div class="footer-legal-final">
-                    <a href="<?= url('mentions-legales') ?>">Mentions legales</a>
-                    <a href="<?= url('confidentialite') ?>">Confidentialite</a>
-                </div>
-            </div>
-        </div>
-    </footer>
+    <?php include ROOT_PATH . '/components/footer.php'; ?>
+
+    <?php include ROOT_PATH . '/components/newsletter-modal.php'; ?>
 
 </body>
 </html>

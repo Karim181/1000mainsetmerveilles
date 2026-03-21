@@ -180,47 +180,9 @@ $autresActualites = dbFetchAll(
         </div>
     </section>
 
-    <!-- ========== FOOTER ========== -->
-    <footer class="footer-final">
-        <div class="container">
-            <div class="footer-final-grid">
-                <div class="footer-main-final">
-                    <img src="<?= asset('images/1000-mains-et-merveilles-2.png') ?>" alt="Logo" class="footer-logo-final">
-                    <p class="footer-tagline-final">Ensemble, donnons une seconde vie aux objets et créons du lien</p>
-                </div>
-                <div class="footer-links-final">
-                    <h4>Navigation</h4>
-                    <ul>
-                        <li><a href="<?= url() ?>">Qui sommes-nous ?</a></li>
-                        <li><a href="<?= url('la-ressourcerie') ?>">La Ressourcerie</a></li>
-                        <li><a href="<?= url('dons') ?>">Faire un don</a></li>
-                        <li><a href="<?= url('agenda') ?>">Agenda</a></li>
-                    </ul>
-                </div>
-                <div class="footer-links-final">
-                    <h4>Nous contacter</h4>
-                    <ul>
-                        <li><a href="<?= url('nous-rejoindre') ?>">Nous rejoindre</a></li>
-                    </ul>
-                </div>
-                <div class="footer-newsletter-final">
-                    <h4>Newsletter</h4>
-                    <p>Restez informés de nos actualités</p>
-                    <form class="newsletter-final" action="#" method="post">
-                        <input type="email" placeholder="Votre email" required>
-                        <button type="submit">→</button>
-                    </form>
-                </div>
-            </div>
-            <div class="footer-bottom-final">
-                <p>&copy; 2026 1000 Mains et Merveilles - Association loi 1901</p>
-                <div class="footer-legal-final">
-                    <a href="<?= url('mentions-legales') ?>">Mentions légales</a>
-                    <a href="<?= url('confidentialite') ?>">Confidentialité</a>
-                </div>
-            </div>
-        </div>
-    </footer>
+    <?php include ROOT_PATH . '/components/footer.php'; ?>
+
+    <?php include ROOT_PATH . '/components/newsletter-modal.php'; ?>
 
 </body>
 </html>

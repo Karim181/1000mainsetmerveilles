@@ -51,7 +51,7 @@ $moisFr = ['', 'janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet',
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Venir chiner - Pépites et objets de seconde main | 1000 Mains et Merveilles</title>
+    <title><?= e(page_content('venir-chiner', 'page-title', 'Venir chiner - 1000 Mains et Merveilles')) ?></title>
     <meta name="description" content="Découvrez nos pépites du moment et les arrivages récents dans notre ressourcerie à Plaisir (78). Meubles, vêtements, déco, livres... à prix solidaires.">
 
     <!-- Favicons -->
@@ -78,15 +78,21 @@ $moisFr = ['', 'janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet',
         <div class="container">
             <div class="page-hero-content">
                 <div class="page-hero-text">
-                    <span class="hero-label-final">🛍️ Nos trouvailles</span>
-                    <h1>Venir <span class="highlight-turquoise">chiner</span></h1>
-                    <p class="hero-description-final">Des objets uniques, des prix solidaires. Découvrez nos pépites du moment et les derniers arrivages dans notre ressourcerie.</p>
+                    <span class="hero-label-final">🛍️ <?= page_content('venir-chiner', 'hero-label', 'Nos trouvailles') ?></span>
+                    <h1><?= page_content('venir-chiner', 'hero-title', 'Venir <span class="highlight-turquoise">chiner</span>') ?></h1>
+                    <p class="hero-description-final"><?= page_content('venir-chiner', 'hero-description', 'Des objets uniques, des prix solidaires. Decouvrez nos pepites du moment et les derniers arrivages dans notre ressourcerie.') ?></p>
+                    <?php include ROOT_PATH . '/components/hero-chiffres.php'; ?>
                 </div>
                 <div class="page-hero-photo">
-                    <div class="photo-placeholder-final hero-page-size">
-                        <div class="photo-icon-final">📸</div>
-                        <p>Photo : rayons de la<br>boutique avec des objets</p>
-                    </div>
+                    <?php $heroImg = page_image('venir-chiner', 'hero-image'); ?>
+                    <?php if ($heroImg): ?>
+                        <img src="<?= upload_url('pages/' . $heroImg) ?>" alt="Venir chiner" class="hero-page-img" style="width: 100%; border-radius: 30px;">
+                    <?php else: ?>
+                        <div class="photo-placeholder-final hero-page-size">
+                            <div class="photo-icon-final">📸</div>
+                            <p>Photo : rayons de la<br>boutique avec des objets</p>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -101,7 +107,7 @@ $moisFr = ['', 'janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet',
     <section class="chiner-pepites">
         <div class="container">
             <div class="section-header-final">
-                <span class="section-tag-final tag-orange">Coups de coeur 💎</span>
+                <span class="section-tag-final tag-orange"><?= page_content('venir-chiner', 'tag-pepites', 'Coups de coeur 💎') ?></span>
                 <h2>Les pépites <span class="highlight-turquoise">en rayon</span></h2>
                 <p>Nos trouvailles préférées du moment, disponibles en boutique</p>
             </div>
@@ -141,7 +147,7 @@ $moisFr = ['', 'janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet',
     <section class="chiner-arrivages">
         <div class="container">
             <div class="section-header-final">
-                <span class="section-tag-final tag-turquoise">Fraîchement arrivés 📦</span>
+                <span class="section-tag-final tag-turquoise"><?= page_content('venir-chiner', 'tag-arrivages', 'Fraîchement arrives 📦') ?></span>
                 <h2>Les arrivages <span class="highlight-turquoise">récents</span></h2>
                 <p>Les derniers objets arrivés en boutique</p>
             </div>
@@ -184,7 +190,7 @@ $moisFr = ['', 'janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet',
     <section class="chiner-categories">
         <div class="container">
             <div class="section-header-final">
-                <span class="section-tag-final tag-orange">Nos rayons 🏷️</span>
+                <span class="section-tag-final tag-orange"><?= page_content('venir-chiner', 'tag-rayons', 'Nos rayons 🏷️') ?></span>
                 <h2>Explorez nos <span class="highlight-turquoise">catégories</span></h2>
                 <p>Tout un univers d'objets à découvrir à prix solidaires</p>
             </div>
@@ -216,7 +222,7 @@ $moisFr = ['', 'janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet',
     <section class="chiner-vendues">
         <div class="container">
             <div class="section-header-final">
-                <span class="section-tag-final tag-turquoise">Déjà parties ! 🎉</span>
+                <span class="section-tag-final tag-turquoise"><?= page_content('venir-chiner', 'tag-vendus', 'Deja parties ! 🎉') ?></span>
                 <h2>Les pépites <span class="highlight-turquoise">vendues</span></h2>
                 <p>Elles ont trouvé preneur... Ne ratez pas les prochaines !</p>
             </div>
@@ -249,7 +255,7 @@ $moisFr = ['', 'janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet',
     <section class="chiner-lieu">
         <div class="container">
             <div class="section-header-final">
-                <span class="section-tag-final tag-orange">Nous trouver 📍</span>
+                <span class="section-tag-final tag-orange"><?= page_content('venir-chiner', 'tag-lieu', 'Nous trouver 📍') ?></span>
                 <h2>Où venir <span class="highlight-turquoise">chiner</span> ?</h2>
                 <p>Notre boutique vous accueille à Plaisir</p>
             </div>
@@ -324,48 +330,9 @@ $moisFr = ['', 'janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet',
         </div>
     </section>
 
-    <!-- ========== FOOTER ========== -->
-    <footer class="footer-final">
-        <div class="container">
-            <div class="footer-final-grid">
-                <div class="footer-main-final">
-                    <img src="<?= asset('images/1000-mains-et-merveilles-2.png') ?>" alt="Logo" class="footer-logo-final">
-                    <p class="footer-tagline-final">Ensemble, donnons une seconde vie aux objets et créons du lien 💙</p>
-                </div>
-                <div class="footer-links-final">
-                    <h4>Navigation</h4>
-                    <ul>
-                        <li><a href="<?= url() ?>">Qui sommes-nous ?</a></li>
-                        <li><a href="<?= url('la-ressourcerie') ?>">La Ressourcerie</a></li>
-                        <li><a href="<?= url('venir-chiner') ?>">Venir chiner</a></li>
-                        <li><a href="<?= url('dons') ?>">📦 Faire un don</a></li>
-                        <li><a href="<?= url('agenda') ?>">Agenda</a></li>
-                    </ul>
-                </div>
-                <div class="footer-links-final">
-                    <h4>Nous contacter</h4>
-                    <ul>
-                        <li><a href="<?= url('nous-rejoindre') ?>">Nous rejoindre</a></li>
-                    </ul>
-                </div>
-                <div class="footer-newsletter-final">
-                    <h4>Newsletter 📬</h4>
-                    <p>Restez informés de nos actualités</p>
-                    <form class="newsletter-final" action="#" method="post">
-                        <input type="email" placeholder="Votre email" required>
-                        <button type="submit">→</button>
-                    </form>
-                </div>
-            </div>
-            <div class="footer-bottom-final">
-                <p>&copy; 2026 1000 Mains et Merveilles &bull; Association loi 1901 💙</p>
-                <div class="footer-legal-final">
-                    <a href="<?= url('mentions-legales') ?>">Mentions légales</a>
-                    <a href="<?= url('confidentialite') ?>">Confidentialité</a>
-                </div>
-            </div>
-        </div>
-    </footer>
+    <?php include ROOT_PATH . '/components/footer.php'; ?>
+
+    <?php include ROOT_PATH . '/components/newsletter-modal.php'; ?>
 
 </body>
 </html>

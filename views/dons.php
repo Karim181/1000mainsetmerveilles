@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Faire un don - Objets ou financier | 1000 Mains et Merveilles</title>
-    <meta name="description" content="Donnez une seconde vie a vos objets ou soutenez notre association par un don financier. Depot a Plaisir et Chavenay (78). Association de reemploi solidaire.">
+    <title><?= e(page_content('dons', 'page-title', 'Faire un don - 1000 Mains et Merveilles')) ?></title>
+    <meta name="description" content="<?= e(page_content('dons', 'page-meta', 'Donnez une seconde vie a vos objets ou soutenez notre action. Depot de dons a Chavenay et Plaisir dans les Yvelines.')) ?>">
 
     <!-- Favicons -->
     <link rel="icon" type="image/x-icon" href="<?= asset('images/favicon.ico') ?>">
@@ -30,15 +30,21 @@
         <div class="container">
             <div class="page-hero-content">
                 <div class="page-hero-text">
-                    <span class="hero-label-final">📦 Donner utile</span>
-                    <h1>Faire un <span class="highlight-turquoise">don</span></h1>
-                    <p class="hero-description-final">Donnez une seconde vie a vos objets ou soutenez notre action par un don financier. Chaque geste compte pour la solidarite et l'environnement.</p>
+                    <span class="hero-label-final">📦 <?= page_content('dons', 'hero-label', 'Donner utile') ?></span>
+                    <h1><?= page_content('dons', 'hero-title', 'Faire un <span class="highlight-turquoise">don</span>') ?></h1>
+                    <p class="hero-description-final"><?= page_content('dons', 'hero-description', 'Donnez une seconde vie a vos objets ou soutenez notre action par un don financier. Chaque geste compte pour la solidarite et l\'environnement.') ?></p>
+                    <?php include ROOT_PATH . '/components/hero-chiffres.php'; ?>
                 </div>
                 <div class="page-hero-photo">
-                    <div class="photo-placeholder-final hero-page-size">
-                        <div class="photo-icon-final">📸</div>
-                        <p>Photo : depot<br>de dons objets</p>
-                    </div>
+                    <?php $heroImg = page_image('dons', 'hero-image'); ?>
+                    <?php if ($heroImg): ?>
+                        <img src="<?= upload_url('pages/' . $heroImg) ?>" alt="Faire un don" class="hero-page-img" style="width: 100%; border-radius: 30px;">
+                    <?php else: ?>
+                        <div class="photo-placeholder-final hero-page-size">
+                            <div class="photo-icon-final">📸</div>
+                            <p>Photo : depot<br>de dons objets</p>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -53,7 +59,7 @@
     <section class="dons-objets">
         <div class="container">
             <div class="section-header-final">
-                <span class="section-tag-final tag-turquoise">Don d'objets 🎁</span>
+                <span class="section-tag-final tag-turquoise"><?= page_content('dons', 'tag-objets', 'Don d\'objets 🎁') ?></span>
                 <h2>Deposez vos <span class="highlight-turquoise">objets</span></h2>
                 <p>Vos objets meritent une seconde vie. Deposez-les dans nos points de collecte.</p>
             </div>
@@ -116,7 +122,7 @@
         <div class="container">
             <div class="dons-financier-card">
                 <div class="dons-financier-content">
-                    <span class="section-tag-final tag-orange">Don financier 💛</span>
+                    <span class="section-tag-final tag-orange"><?= page_content('dons', 'tag-financier', 'Don financier 💛') ?></span>
                     <h2>Soutenez notre <span class="highlight-turquoise">action</span></h2>
                     <p>Votre soutien financier nous permet de poursuivre notre mission : collecter, valoriser et redistribuer des objets a prix solidaire. Chaque don contribue a financer nos actions de reemploi et de solidarite.</p>
                     <ul class="dons-financier-avantages">
@@ -162,47 +168,9 @@
         </div>
     </section>
 
-    <!-- ========== FOOTER ========== -->
-    <footer class="footer-final">
-        <div class="container">
-            <div class="footer-final-grid">
-                <div class="footer-main-final">
-                    <img src="<?= asset('images/1000-mains-et-merveilles-2.png') ?>" alt="Logo" class="footer-logo-final">
-                    <p class="footer-tagline-final">Ensemble, donnons une seconde vie aux objets et creons du lien 💙</p>
-                </div>
-                <div class="footer-links-final">
-                    <h4>Navigation</h4>
-                    <ul>
-                        <li><a href="<?= url() ?>">Qui sommes-nous ?</a></li>
-                        <li><a href="<?= url('la-ressourcerie') ?>">La Ressourcerie</a></li>
-                        <li><a href="<?= url('dons') ?>">📦 Faire un don</a></li>
-                        <li><a href="<?= url('agenda') ?>">Agenda</a></li>
-                    </ul>
-                </div>
-                <div class="footer-links-final">
-                    <h4>Nous contacter</h4>
-                    <ul>
-                        <li><a href="<?= url('nous-rejoindre') ?>">Nous rejoindre</a></li>
-                    </ul>
-                </div>
-                <div class="footer-newsletter-final">
-                    <h4>Newsletter 📬</h4>
-                    <p>Restez informes de nos actualites</p>
-                    <form class="newsletter-final" action="#" method="post">
-                        <input type="email" placeholder="Votre email" required>
-                        <button type="submit">→</button>
-                    </form>
-                </div>
-            </div>
-            <div class="footer-bottom-final">
-                <p>&copy; 2026 1000 Mains et Merveilles &bull; Association loi 1901 💙</p>
-                <div class="footer-legal-final">
-                    <a href="<?= url('mentions-legales') ?>">Mentions legales</a>
-                    <a href="<?= url('confidentialite') ?>">Confidentialite</a>
-                </div>
-            </div>
-        </div>
-    </footer>
+    <?php include ROOT_PATH . '/components/footer.php'; ?>
+
+    <?php include ROOT_PATH . '/components/newsletter-modal.php'; ?>
 
 </body>
 </html>

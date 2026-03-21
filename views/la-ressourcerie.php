@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ressourcerie en Yvelines - Boutique solidaire a Plaisir | 1000 Mains et Merveilles</title>
-    <meta name="description" content="Ressourcerie solidaire a Plaisir (78). Achetez des objets de seconde main a prix doux. Depot de dons a Chavenay. Reemploi, economie circulaire et lien social.">
+    <title><?= e(page_content('la-ressourcerie', 'page-title', 'La Ressourcerie - 1000 Mains et Merveilles')) ?></title>
+    <meta name="description" content="<?= e(page_content('la-ressourcerie', 'page-meta', 'Achetez malin, donnez utile. Notre ressourcerie donne une seconde vie aux objets du quotidien a prix solidaire, a Plaisir (78).')) ?>">
 
     <!-- Favicons -->
     <link rel="icon" type="image/x-icon" href="<?= asset('images/favicon.ico') ?>">
@@ -30,15 +30,21 @@
         <div class="container">
             <div class="page-hero-content">
                 <div class="page-hero-text">
-                    <span class="hero-label-final">🏪 Boutique solidaire</span>
-                    <h1>La Ressourcerie <span class="highlight-turquoise">en Yvelines</span></h1>
-                    <p class="hero-description-final">Achetez malin, donnez utile. Notre ressourcerie donne une seconde vie aux objets du quotidien a prix solidaire, a Plaisir (78).</p>
+                    <span class="hero-label-final">🏪 <?= page_content('la-ressourcerie', 'hero-label', 'Boutique solidaire') ?></span>
+                    <h1><?= page_content('la-ressourcerie', 'hero-title', 'La Ressourcerie <span class="highlight-turquoise">en Yvelines</span>') ?></h1>
+                    <p class="hero-description-final"><?= page_content('la-ressourcerie', 'hero-description', 'Achetez malin, donnez utile. Notre ressourcerie donne une seconde vie aux objets du quotidien a prix solidaire, a Plaisir (78).') ?></p>
+                    <?php include ROOT_PATH . '/components/hero-chiffres.php'; ?>
                 </div>
                 <div class="page-hero-photo">
-                    <div class="photo-placeholder-final hero-page-size">
-                        <div class="photo-icon-final">📸</div>
-                        <p>Photo : interieur<br>boutique ressourcerie</p>
-                    </div>
+                    <?php $heroImg = page_image('la-ressourcerie', 'hero-image'); ?>
+                    <?php if ($heroImg): ?>
+                        <img src="<?= upload_url('pages/' . $heroImg) ?>" alt="La Ressourcerie" class="hero-page-img" style="width: 100%; border-radius: 30px;">
+                    <?php else: ?>
+                        <div class="photo-placeholder-final hero-page-size">
+                            <div class="photo-icon-final">📸</div>
+                            <p>Photo : interieur<br>boutique ressourcerie</p>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -54,7 +60,7 @@
         <div class="container">
             <div class="ress-pedagogie-grid">
                 <div class="ress-pedagogie-text">
-                    <span class="section-tag-final tag-turquoise">Le concept 🌱</span>
+                    <span class="section-tag-final tag-turquoise"><?= page_content('la-ressourcerie', 'tag-concept', 'Le concept 🌱') ?></span>
                     <h2>Qu'est-ce qu'une <span class="highlight-turquoise">ressourcerie</span> ?</h2>
                     <p>Une ressourcerie est un lieu dedie au reemploi : elle collecte les objets dont vous n'avez plus besoin, les valorise (nettoyage, petite reparation, mise en valeur) et les remet en vente a prix solidaire.</p>
                     <p>Contrairement a une dechetterie, rien n'est detruit. Contrairement a une brocante, la demarche est associative et solidaire. L'objectif : reduire les dechets tout en creant du lien social.</p>
@@ -113,7 +119,7 @@
     <section class="ress-boutique">
         <div class="container">
             <div class="section-header-final">
-                <span class="section-tag-final tag-orange">Notre boutique 🛍️</span>
+                <span class="section-tag-final tag-orange"><?= page_content('la-ressourcerie', 'tag-boutique', 'Notre boutique 🛍️') ?></span>
                 <h2>Ressourcerie de <span class="highlight-turquoise">Plaisir</span></h2>
                 <p>Notre lieu principal pour acheter et deposer vos dons</p>
             </div>
@@ -253,47 +259,9 @@
         </div>
     </section>
 
-    <!-- ========== FOOTER ========== -->
-    <footer class="footer-final">
-        <div class="container">
-            <div class="footer-final-grid">
-                <div class="footer-main-final">
-                    <img src="<?= asset('images/1000-mains-et-merveilles-2.png') ?>" alt="Logo" class="footer-logo-final">
-                    <p class="footer-tagline-final">Ensemble, donnons une seconde vie aux objets et creons du lien 💙</p>
-                </div>
-                <div class="footer-links-final">
-                    <h4>Navigation</h4>
-                    <ul>
-                        <li><a href="<?= url() ?>">Qui sommes-nous ?</a></li>
-                        <li><a href="<?= url('la-ressourcerie') ?>">La Ressourcerie</a></li>
-                        <li><a href="<?= url('dons') ?>">📦 Faire un don</a></li>
-                        <li><a href="<?= url('agenda') ?>">Agenda</a></li>
-                    </ul>
-                </div>
-                <div class="footer-links-final">
-                    <h4>Nous contacter</h4>
-                    <ul>
-                        <li><a href="<?= url('nous-rejoindre') ?>">Nous rejoindre</a></li>
-                    </ul>
-                </div>
-                <div class="footer-newsletter-final">
-                    <h4>Newsletter 📬</h4>
-                    <p>Restez informes de nos actualites</p>
-                    <form class="newsletter-final" action="#" method="post">
-                        <input type="email" placeholder="Votre email" required>
-                        <button type="submit">→</button>
-                    </form>
-                </div>
-            </div>
-            <div class="footer-bottom-final">
-                <p>&copy; 2026 1000 Mains et Merveilles &bull; Association loi 1901 💙</p>
-                <div class="footer-legal-final">
-                    <a href="<?= url('mentions-legales') ?>">Mentions legales</a>
-                    <a href="<?= url('confidentialite') ?>">Confidentialite</a>
-                </div>
-            </div>
-        </div>
-    </footer>
+    <?php include ROOT_PATH . '/components/footer.php'; ?>
+
+    <?php include ROOT_PATH . '/components/newsletter-modal.php'; ?>
 
 </body>
 </html>
