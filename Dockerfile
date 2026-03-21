@@ -1,7 +1,7 @@
 FROM php:8.2-apache
 
-# Activer mod_rewrite pour les pretty URLs
-RUN a2enmod rewrite
+# Activer les modules Apache nécessaires
+RUN a2enmod rewrite headers
 
 # Installer les extensions PHP nécessaires
 RUN apt-get update && apt-get install -y \
@@ -9,6 +9,9 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install pdo_mysql intl \
     && docker-php-ext-enable pdo_mysql intl \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Masquer X-Powered-By PHP
+RUN echo "expose_php = Off" > /usr/local/etc/php/conf.d/security.ini
 
 # Copier la config Apache
 COPY docker/000-default.conf /etc/apache2/sites-available/000-default.conf

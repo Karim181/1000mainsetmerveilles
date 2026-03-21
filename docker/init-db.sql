@@ -118,6 +118,8 @@ CREATE TABLE IF NOT EXISTS `events` (
     `end_date` DATETIME NULL,
     `image` VARCHAR(255) NULL,
     `status` ENUM('draft', 'published') NOT NULL DEFAULT 'draft',
+    `is_recurring` TINYINT(1) NOT NULL DEFAULT 0,
+    `recurrence_info` VARCHAR(255) NULL,
     `author_id` INT UNSIGNED NOT NULL,
     `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at` DATETIME NULL ON UPDATE CURRENT_TIMESTAMP,

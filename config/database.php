@@ -12,14 +12,20 @@ declare(strict_types=1);
  * @return PDO
  * @throws PDOException Si la connexion échoue
  */
-function db(): PDO
+function db(): ?PDO
 {
     static $pdo = null;
+    static $failed = false;
+
+    if ($failed) {
+        return null;
+    }
 
     if ($pdo === null) {
         $dsn = sprintf(
-            'mysql:host=%s;dbname=%s;charset=%s',
+            'mysql:host=%s;port=%s;dbname=%s;charset=%s',
             DB_HOST,
+            DB_PORT,
             DB_NAME,
             DB_CHARSET
         );
@@ -33,12 +39,9 @@ function db(): PDO
         try {
             $pdo = new PDO($dsn, DB_USER, DB_PASS, $options);
         } catch (PDOException $e) {
-            if (ENVIRONMENT === 'development') {
-                throw $e;
-            }
-            // En production, log l'erreur et affiche message générique
+            $failed = true;
             error_log('Database connection failed: ' . $e->getMessage());
-            die('Erreur de connexion à la base de données.');
+            return null;
         }
     }
 
@@ -54,7 +57,9 @@ function db(): PDO
  */
 function dbFetchAll(string $sql, array $params = []): array
 {
-    $stmt = db()->prepare($sql);
+    $pdo = db();
+    if ($pdo === null) return [];
+    $stmt = $pdo->prepare($sql);
     $stmt->execute($params);
     return $stmt->fetchAll();
 }
@@ -68,7 +73,9 @@ function dbFetchAll(string $sql, array $params = []): array
  */
 function dbFetchOne(string $sql, array $params = []): ?array
 {
-    $stmt = db()->prepare($sql);
+    $pdo = db();
+    if ($pdo === null) return null;
+    $stmt = $pdo->prepare($sql);
     $stmt->execute($params);
     $result = $stmt->fetch();
     return $result ?: null;
@@ -83,7 +90,9 @@ function dbFetchOne(string $sql, array $params = []): ?array
  */
 function dbExecute(string $sql, array $params = []): int
 {
-    $stmt = db()->prepare($sql);
+    $pdo = db();
+    if ($pdo === null) return 0;
+    $stmt = $pdo->prepare($sql);
     $stmt->execute($params);
     return $stmt->rowCount();
 }
@@ -95,5 +104,7 @@ function dbExecute(string $sql, array $params = []): int
  */
 function dbLastId(): string
 {
-    return db()->lastInsertId();
+    $pdo = db();
+    if ($pdo === null) return '0';
+    return $pdo->lastInsertId();
 }

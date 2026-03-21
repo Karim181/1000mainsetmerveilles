@@ -3,10 +3,11 @@ services:
     build: .
     environment:
       - DB_HOST=db
-      - DB_NAME=1000mains
-      - DB_USER=1000mains
-      - DB_PASS=1000mains_staging
-      - APP_ENV=staging
+      - DB_PORT=3306
+      - DB_NAME=${DB_NAME:-1000mains}
+      - DB_USER=${DB_USER:-1000mains}
+      - DB_PASS=${DB_PASS:-1000mains_staging}
+      - APP_ENV=${APP_ENV:-production}
     volumes:
       - ./uploads:/var/www/html/uploads
       - ./logs:/var/www/html/logs
@@ -15,10 +16,10 @@ services:
         condition: service_healthy
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.1000mains-staging.rule=Host(`1000mains.karimbuilds.com`)"
-      - "traefik.http.routers.1000mains-staging.entrypoints=websecure"
-      - "traefik.http.routers.1000mains-staging.tls.certresolver=letsencrypt"
-      - "traefik.http.services.1000mains-staging.loadbalancer.server.port=80"
+      - "traefik.http.routers.1000mains.rule=Host(`1000mains.karimbuilds.com`)"
+      - "traefik.http.routers.1000mains.entrypoints=websecure"
+      - "traefik.http.routers.1000mains.tls.certresolver=letsencrypt"
+      - "traefik.http.services.1000mains.loadbalancer.server.port=80"
     networks:
       - proxy
       - default
@@ -27,10 +28,10 @@ services:
   db:
     image: mysql:8.0
     environment:
-      MYSQL_ROOT_PASSWORD: root_staging_2026
-      MYSQL_DATABASE: 1000mains
-      MYSQL_USER: 1000mains
-      MYSQL_PASSWORD: 1000mains_staging
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root_staging_2026}
+      MYSQL_DATABASE: ${DB_NAME:-1000mains}
+      MYSQL_USER: ${DB_USER:-1000mains}
+      MYSQL_PASSWORD: ${DB_PASS:-1000mains_staging}
     volumes:
       - db_data:/var/lib/mysql
       - ./docker/init-db.sql:/docker-entrypoint-initdb.d/01-init.sql
