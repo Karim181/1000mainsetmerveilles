@@ -6,7 +6,7 @@
 logs/*
 uploads/*
 database/
-docker/
+docker/init-db.sql
 *.md
 Dockerfile
 docker-compose.yml
