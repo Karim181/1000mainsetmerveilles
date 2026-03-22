@@ -175,8 +175,8 @@ SET FOREIGN_KEY_CHECKS = 1;
 -- Admin par defaut (admin@1000mains.fr / Admin123!)
 -- Editeur par defaut (editeur@1000mains.fr / Editeur123!)
 INSERT INTO `users` (`email`, `password`, `name`, `role`) VALUES
-('admin@1000mains.fr', '$2y$12$MpAw6CfkhH2w.6/hd7lZWeNz.IsSKcEnCGadQTqhlGXxFAIhK9z0O', 'Administrateur', 'admin'),
-('editeur@1000mains.fr', '$2y$12$8AP8k.WUU.cyxW2GjrAWluNNCzx3KMhLRtExxuNJ4OaHeG05SIBLu', 'Editeur', 'editor');
+('admin@1000mains.fr', '$2y$10$Ji9IFY/a2nAXFgo2noLK1OaTsKjWD65YAOU1ULlvRDT7Eb8vgxqie', 'Administrateur', 'admin'),
+('editeur@1000mains.fr', '$2y$10$NHv7i7ZDy7VxQVK.lAn3U.rOmLsSyV17.kY5qGEzV0aFu4E15fgcq', 'Editeur', 'editor');
 
 -- Categories produits
 INSERT INTO `categories` (`name`, `slug`, `icon`, `sort_order`) VALUES
