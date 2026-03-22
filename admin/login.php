@@ -22,12 +22,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($email) || empty($password)) {
         $error = 'Veuillez remplir tous les champs.';
     } else {
-        $user = auth_login($email, $password);
-        if ($user) {
+        $result = auth_login($email, $password);
+        if (!empty($result['success'])) {
             header('Location: ' . admin_url());
             exit;
         } else {
-            $error = 'Email ou mot de passe incorrect.';
+            $errorCode = $result['error'] ?? 'unknown';
+            if ($errorCode === 'user_not_found') {
+                $error = 'Aucun compte trouvé avec cet email.';
+            } elseif ($errorCode === 'wrong_password') {
+                $error = 'Mot de passe incorrect.';
+                if (ENVIRONMENT !== 'production') {
+                    $error .= ' (hash: ' . ($result['hash_prefix'] ?? '?') . '...)';
+                }
+            } else {
+                $error = 'Erreur de connexion inconnue.';
+            }
         }
     }
 }

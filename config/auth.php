@@ -22,15 +22,19 @@ if (session_status() === PHP_SESSION_NONE) {
  * @param string $password
  * @return array|null User data si succès, null sinon
  */
-function auth_login(string $email, string $password): ?array
+function auth_login(string $email, string $password): array
 {
     $user = dbFetchOne(
         'SELECT id, email, password, name, role FROM users WHERE email = ?',
         [$email]
     );
 
-    if (!$user || !password_verify($password, $user['password'])) {
-        return null;
+    if (!$user) {
+        return ['success' => false, 'error' => 'user_not_found'];
+    }
+
+    if (!password_verify($password, $user['password'])) {
+        return ['success' => false, 'error' => 'wrong_password', 'hash_prefix' => substr($user['password'], 0, 7)];
     }
 
     // Mettre à jour last_login
@@ -51,6 +55,7 @@ function auth_login(string $email, string $password): ?array
 
     // Retourner user sans mot de passe
     unset($user['password']);
+    $user['success'] = true;
     return $user;
 }
 

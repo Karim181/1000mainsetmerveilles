@@ -7,7 +7,7 @@ services:
       - DB_NAME=${DB_NAME:-1000mains}
       - DB_USER=${DB_USER:-1000mains}
       - DB_PASS=${DB_PASS:-1000mains_staging}
-      - APP_ENV=${APP_ENV:-production}
+      - APP_ENV=${APP_ENV:-staging}
     volumes:
       - ./uploads:/var/www/html/uploads
       - ./logs:/var/www/html/logs

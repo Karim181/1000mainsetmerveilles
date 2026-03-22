@@ -8,12 +8,12 @@
 define('ENVIRONMENT', getenv('APP_ENV') ?: 'development');
 
 // Affichage erreurs selon environnement
-if (ENVIRONMENT === 'development') {
-    error_reporting(E_ALL);
-    ini_set('display_errors', 1);
-} else {
+if (ENVIRONMENT === 'production') {
     error_reporting(0);
     ini_set('display_errors', 0);
+} else {
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
 }
 
 // Chemins (ROOT_PATH et BASE_URL sont dans helpers.php)
