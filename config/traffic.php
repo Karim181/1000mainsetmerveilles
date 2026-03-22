@@ -58,7 +58,7 @@ function traffic_log($page) {
     
     // Écrire dans fichier
     $log_file = LOG_PATH . '/traffic_' . date('Y-m') . '.log';
-    file_put_contents($log_file, $log_line, FILE_APPEND | LOCK_EX);
+    @file_put_contents($log_file, $log_line, FILE_APPEND | LOCK_EX);
 }
 
 /**

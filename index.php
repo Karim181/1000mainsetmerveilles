@@ -4,6 +4,9 @@
  * 1000 Mains et Merveilles
  */
 
+// 0. Output buffering (évite que les warnings cassent les headers/sessions)
+ob_start();
+
 // 1. Charger helpers EN PREMIER (définit ROOT_PATH et BASE_URL)
 require_once __DIR__ . '/config/helpers.php';
 
