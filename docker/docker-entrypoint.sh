@@ -1,8 +1,9 @@
 #!/bin/bash
 
-# Fixer les permissions des volumes montés
+# Fixer les permissions des volumes montés + sessions
 chown -R www-data:www-data /var/www/html/uploads /var/www/html/logs 2>/dev/null
 chmod -R 775 /var/www/html/uploads /var/www/html/logs 2>/dev/null
+chmod 1777 /tmp
 
 # Seed des utilisateurs (génère les hashes bcrypt via PHP)
 echo "=== Seed utilisateurs ==="

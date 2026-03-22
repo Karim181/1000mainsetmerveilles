@@ -10,8 +10,10 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-enable pdo_mysql intl \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Masquer X-Powered-By PHP
-RUN echo "expose_php = Off" > /usr/local/etc/php/conf.d/security.ini
+# Config PHP : sécurité + sessions
+RUN echo "expose_php = Off" > /usr/local/etc/php/conf.d/security.ini \
+    && echo "session.save_path = /tmp" > /usr/local/etc/php/conf.d/sessions.ini \
+    && chmod 1777 /tmp
 
 # Copier la config Apache
 COPY docker/000-default.conf /etc/apache2/sites-available/000-default.conf
