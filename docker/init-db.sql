@@ -172,11 +172,8 @@ SET FOREIGN_KEY_CHECKS = 1;
 -- Donnees initiales
 -- =============================================
 
--- Admin par defaut (admin@1000mains.fr / Admin123!)
--- Editeur par defaut (editeur@1000mains.fr / Editeur123!)
-INSERT INTO `users` (`email`, `password`, `name`, `role`) VALUES
-('admin@1000mains.fr', '$2y$10$daxwoRUDeT05RbFPxzmKcuPmhqJ9g.HZybFptBh.wALjcGU4WwsYi', 'Administrateur', 'admin'),
-('editeur@1000mains.fr', '$2y$10$UaBzw27ncQgVXFL7ZiOwvuK3ZY5HyANRBkeduQ/4TkNeMnuawUco.', 'Editeur', 'editor');
+-- Les utilisateurs sont créés par docker/seed-users.php au démarrage
+-- (évite les problèmes de $ dans les hashes bcrypt en SQL)
 
 -- Categories produits
 INSERT INTO `categories` (`name`, `slug`, `icon`, `sort_order`) VALUES

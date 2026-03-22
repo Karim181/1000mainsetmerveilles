@@ -24,13 +24,14 @@ RUN mkdir -p /var/www/html/uploads/products \
     /var/www/html/uploads/categories \
     /var/www/html/uploads/news \
     /var/www/html/uploads/events \
+    /var/www/html/uploads/pages \
     /var/www/html/logs \
     && chown -R www-data:www-data /var/www/html/uploads /var/www/html/logs \
     && chmod -R 775 /var/www/html/uploads /var/www/html/logs
 
-# Script d'entrée pour fixer les permissions des volumes montés
-RUN echo '#!/bin/bash\nchown -R www-data:www-data /var/www/html/uploads /var/www/html/logs 2>/dev/null\nchmod -R 775 /var/www/html/uploads /var/www/html/logs 2>/dev/null\nexec apache2-foreground' > /usr/local/bin/docker-entrypoint.sh \
-    && chmod +x /usr/local/bin/docker-entrypoint.sh
+# Script d'entrée : fix permissions + seed users + lancer Apache
+COPY docker/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
 EXPOSE 80
 
