@@ -201,6 +201,24 @@ function csrf_verify(): bool
 function csrf_check(): void
 {
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && !csrf_verify()) {
+        if (ENVIRONMENT !== 'production') {
+            $postToken = $_POST[CSRF_TOKEN_NAME] ?? '(absent)';
+            $sessionToken = $_SESSION[CSRF_TOKEN_NAME] ?? '(absent)';
+            $sessionId = session_id();
+            $cookieSecure = ini_get('session.cookie_secure') ? 'true' : 'false';
+            $https = $_SERVER['HTTPS'] ?? 'off';
+            http_response_code(403);
+            die("Token CSRF invalide.<br><br>"
+                . "<b>Debug :</b><br>"
+                . "Session ID : {$sessionId}<br>"
+                . "POST token : " . substr($postToken, 0, 16) . "...<br>"
+                . "Session token : " . substr($sessionToken, 0, 16) . "...<br>"
+                . "cookie_secure : {$cookieSecure}<br>"
+                . "HTTPS : {$https}<br>"
+                . "SESSION count : " . count($_SESSION) . "<br>"
+                . "Cookie PHPSESSID : " . ($_COOKIE[session_name()] ?? '(absent)')
+            );
+        }
         http_response_code(403);
         die('Token CSRF invalide.');
     }
