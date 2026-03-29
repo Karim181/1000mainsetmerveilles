@@ -77,26 +77,56 @@
     padding: 10px 16px;
     border-radius: 50px;
     transition: color 0.3s ease;
+    position: relative;
 }
 
 .navbar-menu-final a:hover {
     color: #7dd8da;
 }
 
+/* Pastille sous les liens */
+.navbar-menu-final a::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    left: 50%;
+    transform: translateX(-50%) scale(0);
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #20b4b7;
+    transition: transform 0.3s ease;
+}
+
+.navbar-menu-final a:hover::after {
+    transform: translateX(-50%) scale(1);
+}
+
+/* Lien "Faire un don" */
 .nav-highlight {
-    color: #ffc837 !important;
+    color: rgba(255, 255, 255, 0.65) !important;
+}
+
+.nav-highlight::after {
+    background: #34d399 !important;
+    transform: translateX(-50%) scale(1) !important;
 }
 
 .nav-highlight:hover {
-    color: #ffe08a !important;
+    color: #ffc837 !important;
 }
 
+/* Bouton CTA */
 .btn-nav-final {
     background: linear-gradient(135deg, #f17f0a 0%, #ffc837 100%) !important;
     color: white !important;
     padding: 10px 24px;
     border-radius: 50px;
     box-shadow: 0 4px 15px rgba(241, 127, 10, 0.35);
+}
+
+.btn-nav-final::after {
+    display: none !important;
 }
 
 .btn-nav-final:hover {
@@ -108,6 +138,11 @@
 /* Lien actif navbar */
 .nav-active {
     color: #ffffff !important;
+}
+
+.nav-active::after {
+    background: #ffffff !important;
+    transform: translateX(-50%) scale(1) !important;
 }
 
 /* ========== BURGER MENU (Mobile) ========== */

@@ -14,7 +14,7 @@ $error = $_GET['error'] ?? '';
 // Récupérer toutes les entrées
 $entries = dbFetchAll('SELECT * FROM timeline_entries ORDER BY sort_order ASC, year ASC');
 
-$pageTitle = 'Frise chronologique';
+$pageTitle = 'Notre histoire';
 include ROOT_PATH . '/admin/includes/header.php';
 ?>
 
@@ -27,7 +27,7 @@ include ROOT_PATH . '/admin/includes/header.php';
 
 <div class="page-header">
     <div>
-        <p class="page-subtitle">Gerez les etapes de l'histoire de l'association affichees sur la page "Qui sommes-nous".</p>
+        <p class="page-subtitle">Gerez les etapes affichees en accordeon sur la page "Qui sommes-nous".</p>
     </div>
     <a href="<?= admin_url('timeline/create') ?>" class="btn btn-primary">+ Ajouter une etape</a>
 </div>
@@ -35,7 +35,7 @@ include ROOT_PATH . '/admin/includes/header.php';
 <?php if (empty($entries)): ?>
     <div class="empty-state">
         <div class="empty-icon">📅</div>
-        <h3>Aucune etape dans la frise</h3>
+        <h3>Aucune etape dans l'historique</h3>
         <p>Ajoutez la premiere etape de votre histoire.</p>
         <a href="<?= admin_url('timeline/create') ?>" class="btn btn-primary">+ Ajouter une etape</a>
     </div>

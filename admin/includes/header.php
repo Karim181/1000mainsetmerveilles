@@ -70,8 +70,8 @@ if (preg_match("#/$adminSlug/([a-z\-]+)#", $requestUri, $matches)) {
                 </a>
 
                 <a href="<?= admin_url('timeline') ?>" class="nav-item <?= $currentSection === 'timeline' ? 'active' : '' ?>">
-                    <span class="nav-icon">🕰️</span>
-                    <span>Frise chrono</span>
+                    <span class="nav-icon">📜</span>
+                    <span>Notre histoire</span>
                 </a>
 
                 <?php if (auth_is_admin()): ?>

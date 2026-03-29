@@ -1037,158 +1037,86 @@
     overflow: hidden;
 }
 
-.timeline-h {
-    position: relative;
-    padding: 0 20px;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: thin;
-    scrollbar-color: #20b4b7 #e8f0ff;
-}
-
-.timeline-h::-webkit-scrollbar {
-    height: 6px;
-}
-
-.timeline-h::-webkit-scrollbar-track {
-    background: #e8f0ff;
-    border-radius: 10px;
-}
-
-.timeline-h::-webkit-scrollbar-thumb {
-    background: #20b4b7;
-    border-radius: 10px;
-}
-
-/* Ligne horizontale centrale */
-.timeline-h-line {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 50%;
-    height: 4px;
-    background: linear-gradient(90deg, #20b4b7 0%, #2b519f 100%);
-    border-radius: 10px;
-    z-index: 1;
-}
-
-.timeline-h-track {
-    display: flex;
-    gap: 30px;
-    position: relative;
-    min-height: 420px;
-    align-items: center;
-    padding: 20px 0;
-}
-
-/* Item de la frise */
-.timeline-h-item {
-    position: relative;
-    flex: 0 0 260px;
+/* Accordéon histoire */
+.timeline-accordion {
+    max-width: 800px;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    z-index: 2;
+    gap: 12px;
 }
 
-/* Point sur la ligne */
-.timeline-h-dot {
-    width: 20px;
-    height: 20px;
-    background: #20b4b7;
-    border-radius: 50%;
-    border: 4px solid #e8f0ff;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 3;
-    transition: all 0.3s ease;
-}
-
-.timeline-h-item:hover .timeline-h-dot {
-    background: #f17f0a;
-    transform: translate(-50%, -50%) scale(1.3);
-}
-
-/* Carte */
-.timeline-h-card {
+.accordion-item {
     background: white;
-    border-radius: 24px;
-    padding: 24px 20px;
-    box-shadow: 0 8px 30px rgba(43, 81, 159, 0.1);
-    transition: all 0.3s ease;
-    width: 260px;
-    position: absolute;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(43, 81, 159, 0.08);
+    overflow: hidden;
+    transition: box-shadow 0.3s ease;
 }
 
-.timeline-h-item:hover .timeline-h-card {
-    box-shadow: 0 12px 40px rgba(43, 81, 159, 0.18);
-    transform: translateY(-5px);
+.accordion-item:hover {
+    box-shadow: 0 8px 30px rgba(43, 81, 159, 0.15);
 }
 
-/* Cartes en haut (index pair) */
-.timeline-h-top .timeline-h-card {
-    bottom: calc(50% + 30px);
+.accordion-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 24px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    text-align: left;
 }
 
-.timeline-h-top .timeline-h-card::after {
-    content: '';
-    position: absolute;
-    bottom: -8px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 0;
-    height: 0;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-top: 10px solid white;
-}
-
-/* Cartes en bas (index impair) */
-.timeline-h-bottom .timeline-h-card {
-    top: calc(50% + 30px);
-}
-
-.timeline-h-bottom .timeline-h-card::before {
-    content: '';
-    position: absolute;
-    top: -8px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 0;
-    height: 0;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-bottom: 10px solid white;
-}
-
-/* Annee */
-.timeline-h-year {
+.accordion-year {
     font-family: 'Fredoka', sans-serif;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 700;
     color: white;
     background: linear-gradient(135deg, #f17f0a 0%, #ffc837 100%);
-    display: inline-block;
     padding: 5px 16px;
     border-radius: 50px;
-    margin-bottom: 10px;
+    flex-shrink: 0;
 }
 
-.timeline-h-card h3 {
+.accordion-title {
     font-family: 'Fredoka', sans-serif;
     font-size: 17px;
-    font-weight: 700;
+    font-weight: 600;
     color: #2b519f;
-    margin-bottom: 8px;
-    line-height: 1.3;
+    flex: 1;
 }
 
-.timeline-h-card p {
+.accordion-icon {
+    color: #20b4b7;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+}
+
+.accordion-item.active .accordion-icon {
+    transform: rotate(180deg);
+}
+
+.accordion-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.3s ease;
+    padding: 0 24px;
+}
+
+.accordion-item.active .accordion-body {
+    max-height: 300px;
+    padding: 0 24px 24px;
+}
+
+.accordion-body p {
     color: #8b7e74;
-    line-height: 1.6;
-    font-size: 13px;
+    line-height: 1.7;
+    font-size: 15px;
+    padding-left: 80px;
 }
 
 /* ========== CHIFFRES QSN ========== */
@@ -1232,21 +1160,8 @@
         grid-template-columns: repeat(3, 1fr);
     }
 
-    .timeline-h-item {
-        flex: 0 0 220px;
-    }
-
-    .timeline-h-card {
-        width: 220px;
-        padding: 20px 16px;
-    }
-
-    .timeline-h-card h3 {
-        font-size: 15px;
-    }
-
-    .timeline-h-card p {
-        font-size: 12px;
+    .accordion-body p {
+        padding-left: 0;
     }
 }
 
@@ -1295,40 +1210,13 @@
         font-size: 36px;
     }
 
-    /* Frise : passer en vertical sur mobile */
-    .timeline-h-line {
-        display: none;
+    .accordion-header {
+        padding: 16px 18px;
+        gap: 12px;
     }
 
-    .timeline-h-track {
-        flex-direction: column;
-        min-height: auto;
-        gap: 20px;
-        padding: 0;
-    }
-
-    .timeline-h-item {
-        flex: none;
-        width: 100%;
-    }
-
-    .timeline-h-dot {
-        display: none;
-    }
-
-    .timeline-h-card {
-        position: static !important;
-        width: 100%;
-        transform: none !important;
-    }
-
-    .timeline-h-card::before,
-    .timeline-h-card::after {
-        display: none !important;
-    }
-
-    .timeline-h-item:hover .timeline-h-card {
-        transform: none;
+    .accordion-title {
+        font-size: 15px;
     }
 }
 

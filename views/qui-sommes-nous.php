@@ -98,20 +98,21 @@ $timelineEntries = dbFetchAll('SELECT * FROM timeline_entries ORDER BY sort_orde
             </div>
 
             <?php if (!empty($timelineEntries)): ?>
-            <div class="timeline-h">
-                <div class="timeline-h-line"></div>
-                <div class="timeline-h-track">
-                    <?php foreach ($timelineEntries as $i => $entry): ?>
-                    <div class="timeline-h-item <?= $i % 2 === 0 ? 'timeline-h-top' : 'timeline-h-bottom' ?>">
-                        <div class="timeline-h-dot"></div>
-                        <div class="timeline-h-card">
-                            <span class="timeline-h-year"><?= e($entry['year']) ?></span>
-                            <h3><?= e($entry['title']) ?></h3>
-                            <p><?= e($entry['description']) ?></p>
-                        </div>
+            <div class="timeline-accordion">
+                <?php foreach ($timelineEntries as $i => $entry): ?>
+                <div class="accordion-item <?= $i === 0 ? 'active' : '' ?>">
+                    <button class="accordion-header" aria-expanded="<?= $i === 0 ? 'true' : 'false' ?>">
+                        <span class="accordion-year"><?= e($entry['year']) ?></span>
+                        <span class="accordion-title"><?= e($entry['title']) ?></span>
+                        <span class="accordion-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                        </span>
+                    </button>
+                    <div class="accordion-body">
+                        <p><?= e($entry['description']) ?></p>
                     </div>
-                    <?php endforeach; ?>
                 </div>
+                <?php endforeach; ?>
             </div>
             <?php else: ?>
             <p class="empty-message">La frise chronologique sera bientot disponible.</p>
@@ -229,6 +230,23 @@ $timelineEntries = dbFetchAll('SELECT * FROM timeline_entries ORDER BY sort_orde
     <?php include ROOT_PATH . '/components/footer.php'; ?>
 
     <?php include ROOT_PATH . '/components/newsletter-modal.php'; ?>
+
+    <script>
+    document.querySelectorAll('.accordion-header').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const item = btn.closest('.accordion-item');
+            const isActive = item.classList.contains('active');
+            // Fermer tous les items
+            document.querySelectorAll('.accordion-item').forEach(i => i.classList.remove('active'));
+            document.querySelectorAll('.accordion-header').forEach(b => b.setAttribute('aria-expanded', 'false'));
+            // Ouvrir si pas déjà actif
+            if (!isActive) {
+                item.classList.add('active');
+                btn.setAttribute('aria-expanded', 'true');
+            }
+        });
+    });
+    </script>
 
 </body>
 </html>
