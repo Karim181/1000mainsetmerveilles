@@ -250,6 +250,36 @@ function page_image(string $pageSlug, string $sectionKey): ?string
 }
 
 /**
+ * Récupère un bloc visuel GrapesJS depuis la BDD.
+ */
+function page_block(string $pageSlug, string $blockKey = 'main'): ?array
+{
+    if (!function_exists('dbFetchOne')) return null;
+    try {
+        return dbFetchOne(
+            'SELECT gjs_html, gjs_css, gjs_components, gjs_styles FROM page_blocks WHERE page_slug = ? AND block_key = ?',
+            [$pageSlug, $blockKey]
+        );
+    } catch (\Exception $e) {
+        return null;
+    }
+}
+
+/**
+ * Affiche un bloc visuel GrapesJS (HTML + CSS).
+ */
+function render_page_block(string $pageSlug, string $blockKey = 'main'): void
+{
+    $block = page_block($pageSlug, $blockKey);
+    if (!$block || empty($block['gjs_html'])) return;
+
+    if (!empty($block['gjs_css'])) {
+        echo '<style>' . $block['gjs_css'] . '</style>';
+    }
+    echo '<div class="gjs-content">' . $block['gjs_html'] . '</div>';
+}
+
+/**
  * Dump and die - Affiche des variables et arrête l'exécution (debug).
  *
  * @param mixed ...$vars Variables à afficher

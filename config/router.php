@@ -91,6 +91,13 @@ function route_admin(string $page): void
         'pages' => [
             'index' => '/admin/pages/index.php',
             'edit' => '/admin/pages/edit.php',
+            'editor' => '/admin/pages/editor.php',
+            'editor-save' => '/admin/pages/editor-save.php',
+            'editor-upload' => '/admin/pages/editor-upload.php',
+        ],
+        'newsletter' => [
+            'index' => '/admin/newsletter/index.php',
+            'delete' => '/admin/newsletter/delete.php',
         ],
         'timeline' => [
             'index' => '/admin/timeline/index.php',

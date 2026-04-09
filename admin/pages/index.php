@@ -39,11 +39,21 @@ include ROOT_PATH . '/admin/includes/header.php';
 
     <div class="pages-grid">
         <?php foreach ($pages as $slug => $page): ?>
-        <a href="<?= admin_url('pages/edit') ?>?slug=<?= $slug ?>" class="page-card">
+        <div class="page-card">
             <span class="page-card-icon"><?= $page['icon'] ?></span>
             <h3><?= e($page['name']) ?></h3>
             <span class="page-card-count"><?= $counts[$slug] ?? 0 ?> bloc<?= ($counts[$slug] ?? 0) > 1 ? 's' : '' ?> editable<?= ($counts[$slug] ?? 0) > 1 ? 's' : '' ?></span>
-        </a>
+            <div class="page-card-actions">
+                <a href="<?= admin_url('pages/edit') ?>?slug=<?= $slug ?>" class="page-btn page-btn-fields">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                    Champs
+                </a>
+                <a href="<?= admin_url('pages/editor') ?>?slug=<?= $slug ?>" class="page-btn page-btn-visual">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+                    Editeur visuel
+                </a>
+            </div>
+        </div>
         <?php endforeach; ?>
     </div>
 </div>
@@ -90,6 +100,47 @@ include ROOT_PATH . '/admin/includes/header.php';
 .page-card-count {
     font-size: 13px;
     color: #8b7e74;
+}
+
+.page-card-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 15px;
+    width: 100%;
+}
+
+.page-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 8px 10px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.page-btn-fields {
+    background: #f0eee9;
+    color: var(--admin-text);
+}
+
+.page-btn-fields:hover {
+    background: var(--admin-primary);
+    color: white;
+}
+
+.page-btn-visual {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.page-btn-visual:hover {
+    background: #4CAF50;
+    color: white;
 }
 </style>
 

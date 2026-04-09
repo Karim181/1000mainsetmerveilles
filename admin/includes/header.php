@@ -74,6 +74,11 @@ if (preg_match("#/$adminSlug/([a-z\-]+)#", $requestUri, $matches)) {
                     <span>Notre histoire</span>
                 </a>
 
+                <a href="<?= admin_url('newsletter') ?>" class="nav-item <?= $currentSection === 'newsletter' ? 'active' : '' ?>">
+                    <span class="nav-icon">📬</span>
+                    <span>Newsletter</span>
+                </a>
+
                 <?php if (auth_is_admin()): ?>
                 <div class="nav-section">Administration</div>
 

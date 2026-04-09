@@ -84,6 +84,11 @@ $categories = dbFetchAll(
         </div>
     </section>
 
+    <!-- ========== CONTENU VISUEL (GrapesJS) ========== -->
+    <?php if (page_block('home')): ?>
+        <?php render_page_block('home'); ?>
+    <?php else: ?>
+
     <!-- ========== NOS ACTIONS ========== -->
     <section class="landing-actions">
         <div class="container">
@@ -215,6 +220,8 @@ $categories = dbFetchAll(
             </div>
         </div>
     </section>
+
+    <?php endif; /* fin else page_block */ ?>
 
     <!-- ========== CTA REJOINDRE ========== -->
     <section class="cta-final">

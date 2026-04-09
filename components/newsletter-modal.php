@@ -70,9 +70,39 @@ document.addEventListener('DOMContentLoaded', function() {
     // Soumission du formulaire
     form.addEventListener('submit', function(e) {
         e.preventDefault();
-        form.style.display = 'none';
-        success.style.display = 'block';
-        setTimeout(closeModal, 3000);
+        var btn = form.querySelector('button[type="submit"]');
+        btn.disabled = true;
+        btn.textContent = 'Envoi...';
+
+        var data = {
+            first_name: document.getElementById('nl-prenom').value.trim(),
+            last_name: document.getElementById('nl-nom').value.trim(),
+            email: document.getElementById('nl-email').value.trim()
+        };
+
+        fetch('<?= rtrim(BASE_URL, "/") ?>/api/newsletter.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(res) {
+            if (res.success) {
+                form.style.display = 'none';
+                success.style.display = 'block';
+                setTimeout(closeModal, 3000);
+            } else {
+                var msg = res.errors ? res.errors.join(' ') : (res.error || 'Erreur inconnue');
+                alert(msg);
+            }
+        })
+        .catch(function() {
+            alert('Erreur reseau, veuillez reessayer.');
+        })
+        .finally(function() {
+            btn.disabled = false;
+            btn.textContent = 'Valider mon inscription';
+        });
     });
 });
 </script>

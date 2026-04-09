@@ -166,6 +166,39 @@ CREATE TABLE IF NOT EXISTS `timeline_entries` (
     KEY `idx_timeline_sort` (`sort_order`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- =============================================
+-- Table: page_blocks (GrapesJS visual editor)
+-- =============================================
+CREATE TABLE IF NOT EXISTS `page_blocks` (
+    `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `page_slug` VARCHAR(100) NOT NULL,
+    `block_key` VARCHAR(100) NOT NULL DEFAULT 'main',
+    `gjs_html` LONGTEXT NULL COMMENT 'HTML rendu par GrapesJS',
+    `gjs_css` LONGTEXT NULL COMMENT 'CSS genere par GrapesJS',
+    `gjs_components` LONGTEXT NULL COMMENT 'JSON composants GrapesJS (pour re-edition)',
+    `gjs_styles` LONGTEXT NULL COMMENT 'JSON styles GrapesJS (pour re-edition)',
+    `updated_at` DATETIME NULL ON UPDATE CURRENT_TIMESTAMP,
+    `updated_by` INT UNSIGNED NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `uk_page_block` (`page_slug`, `block_key`),
+    CONSTRAINT `fk_page_blocks_user` FOREIGN KEY (`updated_by`)
+        REFERENCES `users` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- =============================================
+-- Table: newsletter_subscribers
+-- =============================================
+CREATE TABLE IF NOT EXISTS `newsletter_subscribers` (
+    `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `first_name` VARCHAR(100) NOT NULL,
+    `last_name` VARCHAR(100) NOT NULL,
+    `email` VARCHAR(255) NOT NULL,
+    `status` ENUM('active', 'unsubscribed') NOT NULL DEFAULT 'active',
+    `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `uk_newsletter_email` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 SET FOREIGN_KEY_CHECKS = 1;
 
 -- =============================================
