@@ -270,6 +270,28 @@ INSERT INTO `page_contents` (`page_slug`, `section_key`, `content_type`, `conten
 ('venir-chiner', 'nav-label', 'text', 'Venir chiner', 'Chiner - Libelle dans la navbar'),
 ('dons', 'nav-label', 'text', 'Faire un don', 'Dons - Libelle dans la navbar'),
 ('nous-rejoindre', 'nav-label', 'text', 'Nous rejoindre', 'Rejoindre - Libelle dans la navbar'),
+-- Cartes actions (accueil)
+('home', 'action1-icon', 'text', '🏪', 'Accueil - Carte 1 icone'),
+('home', 'action1-title', 'text', 'La Ressourcerie', 'Accueil - Carte 1 titre'),
+('home', 'action1-text', 'textarea', 'Un lieu ou les objets retrouvent une seconde vie. Nous collectons, valorisons et revendons a prix solidaire.', 'Accueil - Carte 1 description'),
+('home', 'action1-link-text', 'text', 'En savoir plus →', 'Accueil - Carte 1 lien texte'),
+('home', 'action2-icon', 'text', '🎨', 'Accueil - Carte 2 icone'),
+('home', 'action2-title', 'text', 'Ateliers creatifs', 'Accueil - Carte 2 titre'),
+('home', 'action2-text', 'textarea', 'Apprenez a reparer, transformer et creer lors de nos ateliers ouverts a tous, petits et grands.', 'Accueil - Carte 2 description'),
+('home', 'action2-link-text', 'text', 'Voir le programme →', 'Accueil - Carte 2 lien texte'),
+('home', 'action3-icon', 'text', '🤝', 'Accueil - Carte 3 icone'),
+('home', 'action3-title', 'text', 'Solidarite locale', 'Accueil - Carte 3 titre'),
+('home', 'action3-text', 'textarea', 'Plus de 200 benevoles engages pour creer du lien social et rendre le reemploi accessible a tous.', 'Accueil - Carte 3 description'),
+('home', 'action3-link-text', 'text', 'Decouvrir l''asso →', 'Accueil - Carte 3 lien texte'),
+-- CTA
+('home', 'cta-title', 'text', 'Envie de nous rejoindre ?', 'Accueil - CTA titre'),
+('home', 'cta-text', 'textarea', 'Que vous souhaitiez donner de votre temps, de vos objets ou simplement decouvrir notre univers, vous etes les bienvenus !', 'Accueil - CTA description'),
+('home', 'cta-btn1', 'text', 'Devenir benevole 💛', 'Accueil - CTA bouton 1'),
+('home', 'cta-btn2', 'text', '📦 Faire un don', 'Accueil - CTA bouton 2'),
+-- Reseaux sociaux
+('home', 'tag-social', 'text', 'Suivez-nous', 'Accueil - Pastille section reseaux'),
+('home', 'social-title', 'text', 'Retrouvez-nous sur les <span class="highlight-turquoise">reseaux</span>', 'Accueil - Reseaux titre'),
+('home', 'social-subtitle', 'text', 'Arrivages, coulisses, evenements... ne manquez rien de notre actualite !', 'Accueil - Reseaux sous-titre'),
 -- Pastilles (tags de section)
 ('home', 'tag-actions', 'text', 'Ce que nous faisons 🌱', 'Accueil - Pastille section actions'),
 ('home', 'tag-pepites', 'text', 'A ne pas manquer 💎', 'Accueil - Pastille section pepites'),

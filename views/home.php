@@ -99,24 +99,24 @@ $categories = dbFetchAll(
 
             <div class="landing-actions-grid">
                 <article class="landing-action-card">
-                    <div class="landing-action-icon">🏪</div>
-                    <h3>La Ressourcerie</h3>
-                    <p>Un lieu ou les objets retrouvent une seconde vie. Nous collectons, valorisons et revendons a prix solidaire.</p>
-                    <a href="<?= url('la-ressourcerie') ?>" class="landing-action-link">En savoir plus →</a>
+                    <div class="landing-action-icon"><?= page_content('home', 'action1-icon', '🏪') ?></div>
+                    <h3><?= page_content('home', 'action1-title', 'La Ressourcerie') ?></h3>
+                    <p><?= page_content('home', 'action1-text', 'Un lieu ou les objets retrouvent une seconde vie. Nous collectons, valorisons et revendons a prix solidaire.') ?></p>
+                    <a href="<?= url('la-ressourcerie') ?>" class="landing-action-link"><?= page_content('home', 'action1-link-text', 'En savoir plus →') ?></a>
                 </article>
 
                 <article class="landing-action-card">
-                    <div class="landing-action-icon">🎨</div>
-                    <h3>Ateliers creatifs</h3>
-                    <p>Apprenez a reparer, transformer et creer lors de nos ateliers ouverts a tous, petits et grands.</p>
-                    <a href="<?= url('agenda') ?>" class="landing-action-link">Voir le programme →</a>
+                    <div class="landing-action-icon"><?= page_content('home', 'action2-icon', '🎨') ?></div>
+                    <h3><?= page_content('home', 'action2-title', 'Ateliers creatifs') ?></h3>
+                    <p><?= page_content('home', 'action2-text', 'Apprenez a reparer, transformer et creer lors de nos ateliers ouverts a tous, petits et grands.') ?></p>
+                    <a href="<?= url('agenda') ?>" class="landing-action-link"><?= page_content('home', 'action2-link-text', 'Voir le programme →') ?></a>
                 </article>
 
                 <article class="landing-action-card">
-                    <div class="landing-action-icon">🤝</div>
-                    <h3>Solidarite locale</h3>
-                    <p>Plus de 200 benevoles engages pour creer du lien social et rendre le reemploi accessible a tous.</p>
-                    <a href="<?= url('qui-sommes-nous') ?>" class="landing-action-link">Decouvrir l'asso →</a>
+                    <div class="landing-action-icon"><?= page_content('home', 'action3-icon', '🤝') ?></div>
+                    <h3><?= page_content('home', 'action3-title', 'Solidarite locale') ?></h3>
+                    <p><?= page_content('home', 'action3-text', 'Plus de 200 benevoles engages pour creer du lien social et rendre le reemploi accessible a tous.') ?></p>
+                    <a href="<?= url('qui-sommes-nous') ?>" class="landing-action-link"><?= page_content('home', 'action3-link-text', 'Decouvrir l\'asso →') ?></a>
                 </article>
             </div>
         </div>
@@ -198,9 +198,9 @@ $categories = dbFetchAll(
     <section class="home-social">
         <div class="container">
             <div class="section-header-final">
-                <span class="section-tag-final tag-turquoise">Suivez-nous</span>
-                <h2>Retrouvez-nous sur les <span class="highlight-turquoise">reseaux</span></h2>
-                <p>Arrivages, coulisses, evenements... ne manquez rien de notre actualite !</p>
+                <span class="section-tag-final tag-turquoise"><?= page_content('home', 'tag-social', 'Suivez-nous') ?></span>
+                <h2><?= page_content('home', 'social-title', 'Retrouvez-nous sur les <span class="highlight-turquoise">reseaux</span>') ?></h2>
+                <p><?= page_content('home', 'social-subtitle', 'Arrivages, coulisses, evenements... ne manquez rien de notre actualite !') ?></p>
             </div>
             <div class="home-social-grid">
                 <a href="https://www.facebook.com/1000mainsetmerveilles" target="_blank" rel="noopener noreferrer" class="home-social-card home-social-facebook">
@@ -229,11 +229,11 @@ $categories = dbFetchAll(
             <div class="cta-final-box">
                 <div class="cta-final-content">
                     <span class="cta-emoji-final">🤗</span>
-                    <h2>Envie de nous rejoindre ?</h2>
-                    <p>Que vous souhaitiez donner de votre temps, de vos objets ou simplement decouvrir notre univers, vous etes les bienvenus !</p>
+                    <h2><?= page_content('home', 'cta-title', 'Envie de nous rejoindre ?') ?></h2>
+                    <p><?= page_content('home', 'cta-text', 'Que vous souhaitiez donner de votre temps, de vos objets ou simplement decouvrir notre univers, vous etes les bienvenus !') ?></p>
                     <div class="cta-buttons">
-                        <a href="<?= url('nous-rejoindre') ?>" class="btn-cta-final">Devenir benevole 💛</a>
-                        <a href="<?= url('dons') ?>" class="btn-cta-secondary">📦 Faire un don</a>
+                        <a href="<?= url('nous-rejoindre') ?>" class="btn-cta-final"><?= page_content('home', 'cta-btn1', 'Devenir benevole 💛') ?></a>
+                        <a href="<?= url('dons') ?>" class="btn-cta-secondary"><?= page_content('home', 'cta-btn2', '📦 Faire un don') ?></a>
                     </div>
                 </div>
                 <div class="cta-photo-final">

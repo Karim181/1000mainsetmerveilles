@@ -102,18 +102,19 @@
     transform: translateX(-50%) scale(1);
 }
 
-/* Lien "Faire un don" */
+/* Lien "Faire un don" - surbrillance jaune */
 .nav-highlight {
-    color: rgba(255, 255, 255, 0.65) !important;
+    color: #ffc837 !important;
+    font-weight: 700 !important;
 }
 
 .nav-highlight::after {
-    background: #34d399 !important;
+    background: #ffc837 !important;
     transform: translateX(-50%) scale(1) !important;
 }
 
 .nav-highlight:hover {
-    color: #ffc837 !important;
+    color: #ffe082 !important;
 }
 
 /* Bouton CTA */
