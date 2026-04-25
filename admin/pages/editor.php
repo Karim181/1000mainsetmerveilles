@@ -9,6 +9,7 @@
  */
 
 auth_require();
+header('Content-Type: text/html; charset=UTF-8');
 
 $slug = $_GET['slug'] ?? '';
 
