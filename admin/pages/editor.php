@@ -209,6 +209,72 @@ $pageUrl = url($slug === 'home' ? '' : $slug);
 
         .field-type-badge.image { background: #1e3a2a; color: #4CAF50; }
 
+        /* Image upload zone */
+        .image-upload-zone {
+            position: relative;
+            width: 100%;
+            height: 120px;
+            border: 2px dashed #444;
+            border-radius: 8px;
+            cursor: pointer;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+
+        .image-upload-zone:hover {
+            border-color: #4CAF50;
+        }
+
+        .image-upload-zone.uploading {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .image-upload-preview {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .image-upload-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .image-upload-zone:hover .image-upload-overlay {
+            opacity: 1;
+        }
+
+        .image-upload-overlay span {
+            color: white;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .image-upload-empty {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            gap: 8px;
+            color: #666;
+        }
+
+        .image-upload-empty span {
+            font-size: 12px;
+        }
+
+        .image-upload-zone.modified {
+            border-color: #f59e0b;
+        }
+
         /* Preview iframe */
         .editor-preview {
             flex: 1;
@@ -288,11 +354,20 @@ $pageUrl = url($slug === 'home' ? '' : $slug);
                     <span class="field-type-badge <?= $field['content_type'] === 'image' ? 'image' : '' ?>"><?= $field['content_type'] ?></span>
                 </div>
                 <?php if ($field['content_type'] === 'image'): ?>
-                    <div style="display: flex; gap: 6px; align-items: center;">
-                        <?php if ($field['content_image'] ?? $field['content_text']): ?>
-                            <img src="<?= upload_url('pages/' . ($field['content_image'] ?? $field['content_text'])) ?>" style="width: 40px; height: 40px; border-radius: 6px; object-fit: cover;">
+                    <?php $currentImg = $field['content_image'] ?? $field['content_text'] ?? ''; ?>
+                    <div class="image-upload-zone" data-id="<?= $field['id'] ?>" data-key="<?= e($field['section_key']) ?>" onclick="this.querySelector('input[type=file]').click()">
+                        <input type="file" accept="image/jpeg,image/png,image/webp" style="display:none" onchange="handleImageUpload(this)">
+                        <?php if ($currentImg): ?>
+                            <img src="<?= upload_url('pages/' . $currentImg) ?>" class="image-upload-preview" alt="">
+                            <div class="image-upload-overlay">
+                                <span>Changer l'image</span>
+                            </div>
+                        <?php else: ?>
+                            <div class="image-upload-empty">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                                <span>Cliquez pour ajouter une image</span>
+                            </div>
                         <?php endif; ?>
-                        <span class="field-key"><?= e($field['section_key']) ?></span>
                     </div>
                 <?php elseif ($field['content_type'] === 'textarea'): ?>
                     <textarea
@@ -411,6 +486,68 @@ function saveAll() {
         btn.disabled = changedFields.size === 0;
         btn.textContent = 'Sauvegarder';
         setTimeout(() => { status.textContent = ''; }, 4000);
+    });
+}
+
+// Upload image
+const UPLOAD_URL = <?= json_encode(admin_url('pages/editor-upload')) ?>;
+
+function handleImageUpload(input) {
+    const file = input.files[0];
+    if (!file) return;
+
+    const zone = input.closest('.image-upload-zone');
+    const contentId = zone.dataset.id;
+
+    // Validation cote client
+    const allowed = ['image/jpeg', 'image/png', 'image/webp'];
+    if (!allowed.includes(file.type)) {
+        alert('Format non supporte. Utilisez JPG, PNG ou WebP.');
+        return;
+    }
+    if (file.size > 5 * 1024 * 1024) {
+        alert('Fichier trop volumineux (max 5 Mo).');
+        return;
+    }
+
+    zone.classList.add('uploading');
+
+    const formData = new FormData();
+    formData.append('image', file);
+    formData.append('csrf_token', CSRF_TOKEN);
+    formData.append('content_id', contentId);
+    formData.append('page_slug', PAGE_SLUG);
+
+    fetch(UPLOAD_URL, {
+        method: 'POST',
+        body: formData,
+    })
+    .then(r => r.json())
+    .then(res => {
+        if (res.success) {
+            // Mettre a jour le preview dans la sidebar
+            zone.innerHTML = '<input type="file" accept="image/jpeg,image/png,image/webp" style="display:none" onchange="handleImageUpload(this)">'
+                + '<img src="' + res.url + '" class="image-upload-preview" alt="">'
+                + '<div class="image-upload-overlay"><span>Changer l\'image</span></div>';
+            zone.classList.add('modified');
+
+            // Rafraichir l'apercu
+            document.getElementById('previewFrame').contentWindow.location.reload();
+
+            const status = document.getElementById('saveStatus');
+            status.textContent = 'Image enregistree';
+            status.style.color = '#4CAF50';
+            setTimeout(() => { status.textContent = ''; }, 3000);
+        } else {
+            alert('Erreur : ' + (res.error || 'Upload echoue'));
+        }
+    })
+    .catch(() => {
+        alert('Erreur reseau lors de l\'upload');
+    })
+    .finally(() => {
+        zone.classList.remove('uploading');
+        input.value = '';
     });
 }
 
