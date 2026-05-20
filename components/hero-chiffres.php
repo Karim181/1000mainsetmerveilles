@@ -1,21 +1,24 @@
 <!-- Compteur chiffres clés -->
+<?php
+$chiffres = [
+    ['key' => 'compteur1', 'default_nb' => '12', 'default_label' => "ans d'engagement", 'suffix' => ''],
+    ['key' => 'compteur2', 'default_nb' => '200', 'default_label' => 'benevoles', 'suffix' => '+'],
+    ['key' => 'compteur3', 'default_nb' => '2', 'default_label' => 'lieux en Yvelines', 'suffix' => ''],
+    ['key' => 'compteur4', 'default_nb' => '1000', 'default_label' => 'mains pour agir', 'suffix' => ''],
+];
+?>
 <div class="hero-chiffres">
+    <?php foreach ($chiffres as $c): ?>
+    <?php
+        $nb = page_content('global', $c['key'] . '-nb', $c['default_nb']);
+        $label = page_content('global', $c['key'] . '-label', $c['default_label']);
+        $suffix = page_content('global', $c['key'] . '-suffix', $c['suffix']);
+    ?>
     <div class="hero-chiffre">
-        <span class="hero-chiffre-nb" data-count="12">0</span>
-        <span class="hero-chiffre-label">ans d'engagement</span>
+        <span class="hero-chiffre-nb" data-count="<?= e($nb) ?>"<?php if ($suffix): ?> data-suffix="<?= e($suffix) ?>"<?php endif; ?>>0</span>
+        <span class="hero-chiffre-label"><?= e($label) ?></span>
     </div>
-    <div class="hero-chiffre">
-        <span class="hero-chiffre-nb" data-count="200" data-suffix="+">0</span>
-        <span class="hero-chiffre-label">benevoles</span>
-    </div>
-    <div class="hero-chiffre">
-        <span class="hero-chiffre-nb" data-count="2">0</span>
-        <span class="hero-chiffre-label">lieux en Yvelines</span>
-    </div>
-    <div class="hero-chiffre">
-        <span class="hero-chiffre-nb" data-count="1000">0</span>
-        <span class="hero-chiffre-label">mains pour agir</span>
-    </div>
+    <?php endforeach; ?>
 </div>
 <script>
 (function() {

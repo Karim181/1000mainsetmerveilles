@@ -8,20 +8,34 @@
 $moisFr = ['', 'JAN', 'FÉV', 'MAR', 'AVR', 'MAI', 'JUIN', 'JUIL', 'AOÛT', 'SEP', 'OCT', 'NOV', 'DÉC'];
 $moisFrLong = ['', 'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
 
-// Récupérer les événements à venir (publiés)
+// Récupérer les événements à venir (publiés) par catégorie
+$ateliers = dbFetchAll(
+    'SELECT * FROM events
+     WHERE status = "published" AND category = "atelier" AND start_date >= NOW()
+     ORDER BY start_date ASC
+     LIMIT 4'
+);
+
+$evenements = dbFetchAll(
+    'SELECT * FROM events
+     WHERE status = "published" AND category = "evenement" AND start_date >= NOW()
+     ORDER BY start_date ASC
+     LIMIT 4'
+);
+
+$speciaux = dbFetchAll(
+    'SELECT * FROM events
+     WHERE status = "published" AND category = "special" AND start_date >= NOW()
+     ORDER BY start_date ASC
+     LIMIT 4'
+);
+
+// Tous les événements à venir (toutes catégories)
 $evenementsAVenir = dbFetchAll(
     'SELECT * FROM events
      WHERE status = "published" AND start_date >= NOW()
      ORDER BY start_date ASC
-     LIMIT 6'
-);
-
-// Récupérer les prochains événements pour le programme du mois
-$programmeMois = dbFetchAll(
-    'SELECT * FROM events
-     WHERE status = "published" AND start_date >= NOW()
-     ORDER BY start_date ASC
-     LIMIT 4'
+     LIMIT 12'
 );
 ?>
 <!DOCTYPE html>
@@ -88,34 +102,23 @@ $programmeMois = dbFetchAll(
                         <h2>Apprenez, créez, <span class="highlight-turquoise">partagez</span></h2>
                     </div>
                     <div class="ateliers-list">
-                        <div class="atelier-item">
-                            <span class="atelier-icon">🧵</span>
-                            <div>
-                                <h3>Couture & Retouche</h3>
-                                <p>Réparer, transformer et customiser vos vêtements.</p>
+                        <?php if (empty($ateliers)): ?>
+                            <p class="empty-message">Aucun atelier programmé pour le moment.</p>
+                        <?php else: ?>
+                            <?php foreach ($ateliers as $event): ?>
+                            <?php $dateEvent = strtotime($event['start_date']); ?>
+                            <div class="atelier-item">
+                                <div class="evenement-date-mini">
+                                    <span class="jour"><?= date('d', $dateEvent) ?></span>
+                                    <span class="mois"><?= $moisFr[(int)date('n', $dateEvent)] ?></span>
+                                </div>
+                                <div>
+                                    <h3><?= e($event['title']) ?><?php if (!empty($event['is_recurring'])): ?> <span class="badge-recurring">🔄</span><?php endif; ?></h3>
+                                    <p><?= e(substr($event['description'], 0, 80)) ?><?= strlen($event['description']) > 80 ? '...' : '' ?></p>
+                                </div>
                             </div>
-                        </div>
-                        <div class="atelier-item">
-                            <span class="atelier-icon">🪑</span>
-                            <div>
-                                <h3>Relooking meubles</h3>
-                                <p>Peinture, patine, techniques de rénovation.</p>
-                            </div>
-                        </div>
-                        <div class="atelier-item">
-                            <span class="atelier-icon">🎨</span>
-                            <div>
-                                <h3>Loisirs créatifs</h3>
-                                <p>Déco, bijoux, objets récup...</p>
-                            </div>
-                        </div>
-                        <div class="atelier-item">
-                            <span class="atelier-icon">🔧</span>
-                            <div>
-                                <h3>Réparation</h3>
-                                <p>Électroménager, vélos, objets du quotidien.</p>
-                            </div>
-                        </div>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     </div>
                 </div>
 
@@ -126,10 +129,10 @@ $programmeMois = dbFetchAll(
                         <h2>Événements du <span class="highlight-turquoise">mois</span></h2>
                     </div>
                     <div class="programme-liste">
-                        <?php if (empty($programmeMois)): ?>
+                        <?php if (empty($evenements)): ?>
                             <p class="empty-message">Aucun événement programmé pour le moment.</p>
                         <?php else: ?>
-                            <?php foreach ($programmeMois as $event): ?>
+                            <?php foreach ($evenements as $event): ?>
                             <?php
                             $dateEvent = strtotime($event['start_date']);
                             $jour = date('d', $dateEvent);
@@ -158,29 +161,35 @@ $programmeMois = dbFetchAll(
                     <p class="programme-note">Dates susceptibles d'être modifiées</p>
                 </div>
 
-                <!-- SECTION 3 : AUTRES EVENEMENTS -->
+                <!-- SECTION 3 : EVENEMENTS SPECIAUX -->
                 <div class="agenda-grid-cell agenda-evenements">
                     <div class="grid-cell-header">
                         <span class="section-tag-final tag-turquoise">Événements spéciaux</span>
                         <h2>Autres <span class="highlight-turquoise">rendez-vous</span></h2>
                     </div>
                     <div class="evenements-speciaux-list">
-                        <div class="evenement-special-item">
-                            <span class="evenement-special-icon">🎉</span>
-                            <div>
-                                <h3>Vente spéciale printemps</h3>
-                                <p>Grande vente avec promotions sur tout le magasin.</p>
-                                <span class="evenement-special-date">Mars 2026</span>
+                        <?php if (empty($speciaux)): ?>
+                            <p class="empty-message">Aucun événement spécial prévu pour le moment.</p>
+                        <?php else: ?>
+                            <?php foreach ($speciaux as $event): ?>
+                            <?php
+                            $dateEvent = strtotime($event['start_date']);
+                            $moisLong = $moisFrLong[(int)date('n', $dateEvent)];
+                            $annee = date('Y', $dateEvent);
+                            ?>
+                            <div class="evenement-special-item">
+                                <div class="evenement-date-mini">
+                                    <span class="jour"><?= date('d', $dateEvent) ?></span>
+                                    <span class="mois"><?= $moisFr[(int)date('n', $dateEvent)] ?></span>
+                                </div>
+                                <div>
+                                    <h3><?= e($event['title']) ?></h3>
+                                    <p><?= e(substr($event['description'], 0, 80)) ?><?= strlen($event['description']) > 80 ? '...' : '' ?></p>
+                                    <span class="evenement-special-date"><?= $moisLong ?> <?= $annee ?></span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="evenement-special-item">
-                            <span class="evenement-special-icon">🚪</span>
-                            <div>
-                                <h3>Portes ouvertes</h3>
-                                <p>Découvrez les coulisses de la ressourcerie.</p>
-                                <span class="evenement-special-date">Printemps 2026</span>
-                            </div>
-                        </div>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     </div>
                 </div>
 
@@ -192,7 +201,7 @@ $programmeMois = dbFetchAll(
                     </div>
                     <div class="proposer-content">
                         <p>Vous maîtrisez une technique, un savoir-faire ? Proposez d'animer un atelier bénévole ! Couture, bricolage, création, réparation... Toutes les idées sont les bienvenues.</p>
-                        <a href="<?= url('nous-rejoindre') ?>" class="btn-cta-final">Proposer un atelier</a>
+                        <a href="<?= url('nous-rejoindre') ?>" class="btn-cta-final">Nous contacter</a>
                     </div>
                 </div>
 

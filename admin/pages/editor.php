@@ -20,6 +20,7 @@ $pages = [
     'dons' => 'Faire un don',
     'venir-chiner' => 'Venir chiner',
     'nous-rejoindre' => 'Nous rejoindre',
+    'global' => 'Compteurs & global',
 ];
 
 if (!isset($pages[$slug])) {

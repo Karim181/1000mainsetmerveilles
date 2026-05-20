@@ -32,7 +32,7 @@ if (!$token || !isset($_SESSION['csrf_token']) || !hash_equals($_SESSION['csrf_t
 $pageSlug = $input['page_slug'] ?? '';
 $fields = $input['fields'] ?? [];
 
-$allowedPages = ['home', 'qui-sommes-nous', 'la-ressourcerie', 'dons', 'venir-chiner', 'nous-rejoindre'];
+$allowedPages = ['home', 'qui-sommes-nous', 'la-ressourcerie', 'dons', 'venir-chiner', 'nous-rejoindre', 'global'];
 if (!in_array($pageSlug, $allowedPages)) {
     echo json_encode(['success' => false, 'error' => 'Page non autorisee']);
     exit;

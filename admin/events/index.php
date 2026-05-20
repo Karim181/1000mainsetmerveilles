@@ -8,10 +8,17 @@ auth_require();
 
 $user = auth_user();
 
+$categories = [
+    'atelier' => 'Atelier créatif',
+    'evenement' => 'Événement',
+    'special' => 'Événement spécial',
+];
+
 // Filtres
 $status = $_GET['status'] ?? '';
 $search = $_GET['search'] ?? '';
 $period = $_GET['period'] ?? '';
+$category = $_GET['category'] ?? '';
 
 // Construction de la requête
 $sql = 'SELECT e.*, u.name as author_name
@@ -30,6 +37,11 @@ if ($search) {
     $params[] = "%$search%";
     $params[] = "%$search%";
     $params[] = "%$search%";
+}
+
+if ($category) {
+    $sql .= ' AND e.category = ?';
+    $params[] = $category;
 }
 
 if ($period === 'upcoming') {
@@ -75,6 +87,13 @@ include ROOT_PATH . '/admin/includes/header.php';
                 <option value="draft" <?= $status === 'draft' ? 'selected' : '' ?>>Brouillon</option>
             </select>
 
+            <select name="category" class="form-control">
+                <option value="">Toutes les catégories</option>
+                <?php foreach ($categories as $val => $label): ?>
+                    <option value="<?= $val ?>" <?= $category === $val ? 'selected' : '' ?>><?= e($label) ?></option>
+                <?php endforeach; ?>
+            </select>
+
             <select name="period" class="form-control">
                 <option value="">Toutes les dates</option>
                 <option value="upcoming" <?= $period === 'upcoming' ? 'selected' : '' ?>>À venir</option>
@@ -82,7 +101,7 @@ include ROOT_PATH . '/admin/includes/header.php';
             </select>
 
             <button type="submit" class="btn btn-secondary">Filtrer</button>
-            <?php if ($search || $status || $period): ?>
+            <?php if ($search || $status || $period || $category): ?>
                 <a href="<?= admin_url('events') ?>" class="btn btn-link">Réinitialiser</a>
             <?php endif; ?>
         </div>
@@ -98,6 +117,7 @@ include ROOT_PATH . '/admin/includes/header.php';
                     <th>Titre</th>
                     <th>Date</th>
                     <th>Lieu</th>
+                    <th>Catégorie</th>
                     <th>Statut</th>
                     <th>Auteur</th>
                     <th>Actions</th>
@@ -137,6 +157,9 @@ include ROOT_PATH . '/admin/includes/header.php';
                         <?php endif; ?>
                     </td>
                     <td>
+                        <span class="badge badge-cat-<?= $event['category'] ?? 'evenement' ?>"><?= e($categories[$event['category'] ?? 'evenement']) ?></span>
+                    </td>
+                    <td>
                         <?php if ($event['status'] === 'published'): ?>
                             <span class="badge badge-success">Publié</span>
                         <?php else: ?>
@@ -167,6 +190,33 @@ include ROOT_PATH . '/admin/includes/header.php';
 
 .event-past {
     opacity: 0.6;
+}
+
+.badge-cat-atelier {
+    background: #e0f7f8;
+    color: #20b4b7;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.badge-cat-evenement {
+    background: #e8f0ff;
+    color: #2b519f;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.badge-cat-special {
+    background: #fff3e0;
+    color: #f17f0a;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
 }
 </style>
 

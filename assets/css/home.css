@@ -56,34 +56,6 @@
     transform: translateY(-2px);
 }
 
-/* ========== CHIFFRES DANS LE HERO ========== */
-.hero-chiffres {
-    display: flex;
-    gap: 30px;
-    margin-top: 40px;
-    padding-top: 30px;
-    border-top: 1px solid rgba(43, 81, 159, 0.15);
-}
-
-.hero-chiffre {
-    display: flex;
-    flex-direction: column;
-}
-
-.hero-chiffre-nb {
-    font-family: 'Fredoka', sans-serif;
-    font-size: 28px;
-    font-weight: 700;
-    color: #2b519f;
-    line-height: 1;
-}
-
-.hero-chiffre-label {
-    font-size: 13px;
-    color: #5a7bb5;
-    margin-top: 4px;
-}
-
 /* ========== NOS ACTIONS ========== */
 .landing-actions {
     padding: 100px 0;
@@ -180,10 +152,6 @@
         margin-left: auto;
         margin-right: auto;
     }
-
-    .hero-chiffres {
-        gap: 20px;
-    }
 }
 
 @media (max-width: 768px) {
@@ -198,28 +166,6 @@
 
     .landing-hero-cta {
         justify-content: center;
-    }
-
-    .hero-chiffres {
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 20px 30px;
-    }
-
-    .hero-chiffre {
-        align-items: center;
-    }
-}
-
-@media (max-width: 480px) {
-    .hero-chiffres {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 15px;
-    }
-
-    .hero-chiffre-nb {
-        font-size: 24px;
     }
 }
 

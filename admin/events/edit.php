@@ -29,6 +29,12 @@ $startTime = $event['start_date'] ? date('H:i', strtotime($event['start_date']))
 $endDate = $event['end_date'] ? date('Y-m-d', strtotime($event['end_date'])) : '';
 $endTime = $event['end_date'] ? date('H:i', strtotime($event['end_date'])) : '';
 
+$categories = [
+    'atelier' => 'Atelier créatif',
+    'evenement' => 'Événement',
+    'special' => 'Événement spécial',
+];
+
 $errors = [];
 $data = array_merge($event, [
     'start_date' => $startDate,
@@ -51,6 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'start_time' => $_POST['start_time'] ?? '10:00',
         'end_date' => $_POST['end_date'] ?? '',
         'end_time' => $_POST['end_time'] ?? '',
+        'category' => $_POST['category'] ?? 'evenement',
         'status' => $_POST['status'] ?? 'draft',
         'is_recurring' => isset($_POST['is_recurring']) ? 1 : 0,
         'recurrence_info' => trim($_POST['recurrence_info'] ?? ''),
@@ -116,7 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($errors)) {
         $sql = 'UPDATE events SET
                 title = ?, slug = ?, description = ?, location = ?,
-                start_date = ?, end_date = ?, image = ?, status = ?,
+                start_date = ?, end_date = ?, image = ?, category = ?, status = ?,
                 is_recurring = ?, recurrence_info = ?, updated_at = NOW()
                 WHERE id = ?';
 
@@ -128,6 +135,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $startDateTime,
             $endDateTime,
             $imageName,
+            $data['category'],
             $data['status'],
             $data['is_recurring'],
             $data['recurrence_info'] ?: null,
@@ -218,13 +226,24 @@ include ROOT_PATH . '/admin/includes/header.php';
 
         <div class="form-row">
             <div class="form-group">
+                <label for="category">Catégorie *</label>
+                <select id="category" name="category" class="form-control">
+                    <?php foreach ($categories as $val => $label): ?>
+                        <option value="<?= $val ?>" <?= ($data['category'] ?? 'evenement') === $val ? 'selected' : '' ?>><?= e($label) ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+
+            <div class="form-group">
                 <label for="status">Statut</label>
                 <select id="status" name="status" class="form-control">
                     <option value="draft" <?= $data['status'] === 'draft' ? 'selected' : '' ?>>Brouillon</option>
                     <option value="published" <?= $data['status'] === 'published' ? 'selected' : '' ?>>Publié</option>
                 </select>
             </div>
+        </div>
 
+        <div class="form-row">
             <div class="form-group">
                 <label for="image">Image</label>
                 <?php if ($data['image']): ?>

@@ -117,6 +117,7 @@ CREATE TABLE IF NOT EXISTS `events` (
     `start_date` DATETIME NOT NULL,
     `end_date` DATETIME NULL,
     `image` VARCHAR(255) NULL,
+    `category` ENUM('atelier', 'evenement', 'special') NOT NULL DEFAULT 'evenement',
     `status` ENUM('draft', 'published') NOT NULL DEFAULT 'draft',
     `is_recurring` TINYINT(1) NOT NULL DEFAULT 0,
     `recurrence_info` VARCHAR(255) NULL,
@@ -316,7 +317,20 @@ INSERT INTO `page_contents` (`page_slug`, `section_key`, `content_type`, `conten
 ('venir-chiner', 'tag-vendus', 'text', 'Deja parties ! 🎉', 'Chiner - Pastille section vendus'),
 ('venir-chiner', 'tag-lieu', 'text', 'Nous trouver 📍', 'Chiner - Pastille section lieu'),
 ('nous-rejoindre', 'tag-benevolat', 'text', 'Benevolat', 'Rejoindre - Pastille section benevolat'),
-('nous-rejoindre', 'tag-contact', 'text', 'Contact', 'Rejoindre - Pastille section contact');
+('nous-rejoindre', 'tag-contact', 'text', 'Contact', 'Rejoindre - Pastille section contact'),
+-- Compteurs chiffres cles (global = affiche sur toutes les pages)
+('global', 'compteur1-nb', 'text', '12', 'Compteur 1 - Nombre'),
+('global', 'compteur1-label', 'text', 'ans d''engagement', 'Compteur 1 - Label'),
+('global', 'compteur1-suffix', 'text', '', 'Compteur 1 - Suffixe (ex: +)'),
+('global', 'compteur2-nb', 'text', '200', 'Compteur 2 - Nombre'),
+('global', 'compteur2-label', 'text', 'benevoles', 'Compteur 2 - Label'),
+('global', 'compteur2-suffix', 'text', '+', 'Compteur 2 - Suffixe'),
+('global', 'compteur3-nb', 'text', '2', 'Compteur 3 - Nombre'),
+('global', 'compteur3-label', 'text', 'lieux en Yvelines', 'Compteur 3 - Label'),
+('global', 'compteur3-suffix', 'text', '', 'Compteur 3 - Suffixe'),
+('global', 'compteur4-nb', 'text', '1000', 'Compteur 4 - Nombre'),
+('global', 'compteur4-label', 'text', 'mains pour agir', 'Compteur 4 - Label'),
+('global', 'compteur4-suffix', 'text', '', 'Compteur 4 - Suffixe');
 
 -- Frise chronologique
 INSERT INTO `timeline_entries` (`year`, `title`, `description`, `sort_order`) VALUES

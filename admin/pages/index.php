@@ -14,6 +14,7 @@ $pages = [
     'dons' => ['name' => 'Faire un don', 'icon' => '📦'],
     'venir-chiner' => ['name' => 'Venir chiner', 'icon' => '🛍️'],
     'nous-rejoindre' => ['name' => 'Nous rejoindre', 'icon' => '🤝'],
+    'global' => ['name' => 'Compteurs & global', 'icon' => '🔢'],
 ];
 
 // Compter les contenus par page
@@ -48,10 +49,12 @@ include ROOT_PATH . '/admin/includes/header.php';
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                     Champs
                 </a>
+                <?php if ($slug !== 'global'): ?>
                 <a href="<?= admin_url('pages/editor') ?>?slug=<?= $slug ?>" class="page-btn page-btn-visual">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
                     Editeur visuel
                 </a>
+                <?php endif; ?>
             </div>
         </div>
         <?php endforeach; ?>

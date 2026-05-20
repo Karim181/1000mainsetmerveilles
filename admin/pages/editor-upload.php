@@ -32,7 +32,7 @@ if (empty($_FILES['image'])) {
 $contentId = (int)($_POST['content_id'] ?? 0);
 $pageSlug = $_POST['page_slug'] ?? '';
 
-$allowedPages = ['home', 'qui-sommes-nous', 'la-ressourcerie', 'dons', 'venir-chiner', 'nous-rejoindre'];
+$allowedPages = ['home', 'qui-sommes-nous', 'la-ressourcerie', 'dons', 'venir-chiner', 'nous-rejoindre', 'global'];
 if (!in_array($pageSlug, $allowedPages)) {
     echo json_encode(['success' => false, 'error' => 'Page non autorisee']);
     exit;

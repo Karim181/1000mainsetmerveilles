@@ -17,9 +17,16 @@ $data = [
     'start_time' => '10:00',
     'end_date' => '',
     'end_time' => '',
+    'category' => 'evenement',
     'status' => 'draft',
     'is_recurring' => 0,
     'recurrence_info' => '',
+];
+
+$categories = [
+    'atelier' => 'Atelier créatif',
+    'evenement' => 'Événement',
+    'special' => 'Événement spécial',
 ];
 
 // Traitement du formulaire
@@ -34,6 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'start_time' => $_POST['start_time'] ?? '10:00',
         'end_date' => $_POST['end_date'] ?? '',
         'end_time' => $_POST['end_time'] ?? '',
+        'category' => $_POST['category'] ?? 'evenement',
         'status' => $_POST['status'] ?? 'draft',
         'is_recurring' => isset($_POST['is_recurring']) ? 1 : 0,
         'recurrence_info' => trim($_POST['recurrence_info'] ?? ''),
@@ -84,8 +92,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Insertion si pas d'erreurs
     if (empty($errors)) {
-        $sql = 'INSERT INTO events (title, slug, description, location, start_date, end_date, image, status, is_recurring, recurrence_info, author_id, created_at)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())';
+        $sql = 'INSERT INTO events (title, slug, description, location, start_date, end_date, image, category, status, is_recurring, recurrence_info, author_id, created_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())';
 
         dbExecute($sql, [
             $data['title'],
@@ -95,6 +103,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $startDateTime,
             $endDateTime,
             $imageName,
+            $data['category'],
             $data['status'],
             $data['is_recurring'],
             $data['recurrence_info'] ?: null,
@@ -184,13 +193,24 @@ include ROOT_PATH . '/admin/includes/header.php';
 
         <div class="form-row">
             <div class="form-group">
+                <label for="category">Catégorie *</label>
+                <select id="category" name="category" class="form-control">
+                    <?php foreach ($categories as $val => $label): ?>
+                        <option value="<?= $val ?>" <?= $data['category'] === $val ? 'selected' : '' ?>><?= e($label) ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+
+            <div class="form-group">
                 <label for="status">Statut</label>
                 <select id="status" name="status" class="form-control">
                     <option value="draft" <?= $data['status'] === 'draft' ? 'selected' : '' ?>>Brouillon</option>
                     <option value="published" <?= $data['status'] === 'published' ? 'selected' : '' ?>>Publié</option>
                 </select>
             </div>
+        </div>
 
+        <div class="form-row">
             <div class="form-group">
                 <label for="image">Image</label>
                 <input type="file" id="image" name="image" class="form-control" accept="image/jpeg,image/png,image/webp">
